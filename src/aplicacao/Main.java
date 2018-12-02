@@ -7,6 +7,7 @@ package aplicacao;
 
 import controller.RootController;
 import controller.TelaDeLoginController;
+import controller.TelaInsereMovimentacaoController;
 import controller.TelaPrincipalController;
 import java.awt.Panel;
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class Main extends Application {
             excecao.printStackTrace();
         }
     }
-    
+
     public void exibeTelaPrincipal() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -81,8 +82,22 @@ public class Main extends Application {
             excecao.printStackTrace();
         }
     }
-    
-     public void mostraAlerta(Alert.AlertType tipoDeAlerta, String titulo, String cabecalho, String mensagem){
+
+    public void exibeTelaInsereMovimentacao() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/TelaInsereMovimentacao.fxml"));
+            AnchorPane telaInsereMovimentacao = (AnchorPane) loader.load();
+            root.setCenter(telaInsereMovimentacao);
+            TelaInsereMovimentacaoController controlador = loader.getController();
+            controlador.setMain(this);
+        } catch (IOException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.printStackTrace();
+        }
+    }
+
+    public void mostraAlerta(Alert.AlertType tipoDeAlerta, String titulo, String cabecalho, String mensagem) {
         Alert alerta = new Alert(tipoDeAlerta);
         alerta.initOwner(this.getPrimeiraCena());
         alerta.setTitle(titulo);
@@ -90,8 +105,8 @@ public class Main extends Application {
         alerta.setContentText(mensagem);
         alerta.showAndWait();
     }
-     
-     public Stage getPrimeiraCena(){
+
+    public Stage getPrimeiraCena() {
         return this.primeiraCena;
     }
 

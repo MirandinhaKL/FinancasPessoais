@@ -70,6 +70,9 @@ public class TelaPrincipalController implements Initializable {
         preencheComboBoxMes();
         criaTabela();
         carregarTabelaComDadosDoBanco();
+        exibeUltimaMovimentacao();
+        configuraLabelDoSaldoAtual();
+        configuraLabelDoSaldoPrevisto();
     }
 
     @FXML
@@ -88,9 +91,100 @@ public class TelaPrincipalController implements Initializable {
         }
         System.out.println("Excluir movimentação");
     }
+    
+    public void exibeUltimaMovimentacao() {
+        int tamanho = movimentacaoObservable.size();
+        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).exibeTipoDeMovimentacao());
+        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho - 1).exibeValorDaMovimentacao());
+    }
+    
+    /**
+     * @param tipo - Informa se a movimentação é uma receita ou despesa.
+     * @param ehNofuturo boolean = 0, se já aconteceu. 1, se a operação foi
+     * agendada.
+     * @return somatório de todas as movimentações especificas realizadas.
+     */
+    public double calculaMovimentacao(String tipo, boolean ehNofuturo) {
+        String tipoDeMovimentacao;
+        boolean statusDaMovimentacao;
+        double somatorioMovimentacoes = 0;
+        for (int i = 0; i < movimentacaoObservable.size(); i++) {
+            tipoDeMovimentacao = movimentacaoObservable.get(i).getTipo().getDescricao();
+            statusDaMovimentacao = movimentacaoObservable.get(i).getParaOfuturo(); //alterada
+            if (tipoDeMovimentacao.equalsIgnoreCase(tipo) && (statusDaMovimentacao == ehNofuturo)) {
+                somatorioMovimentacoes = somatorioMovimentacoes + movimentacaoObservable.get(i).getValor();
+            }
+        }
+        return somatorioMovimentacoes;
+    }
+    
+    /**
+     * @return Somatório das desepesas efetuadas.
+     */
+    public double calculoDaDespesaAtual() {
+        return calculaMovimentacao("Despesa", false);
+    }
 
+    /**
+     * @return Somatório das desepesas efetuadas + as planejadas.
+     */
+    public double calculaDaDespesaFutura() {
+        return calculaMovimentacao("Despesa", true) + calculoDaDespesaAtual();
+    }
+
+    /**
+     * @return Somatório das receitas efetuadas.
+     */
+    public double calculaDaReceitaAtual() {
+        return calculaMovimentacao("Receita", false);
+    }
+
+    /**
+     * @return Somatório das receitas efetuadas + as planejadas.
+     */
+    public double calculoDaReceitaFutura() {
+        return calculaMovimentacao("Receita", true) + calculaDaReceitaAtual();
+    }
+
+    /**
+     * @return Retorna o saldo atual das movimentações financeiras efetuadas.
+     */
+    public double calculaSaldoAtual() {
+        return calculaDaReceitaAtual() - calculoDaDespesaAtual();
+    }
+
+    /**
+     * @return Retorna o saldo atual das movimentações financeiras efetuadas +
+     * as previstas.
+     */
+    public double calculaSaldoPrevisto() {
+        return calculoDaReceitaFutura() + calculaDaReceitaAtual() - calculaDaDespesaFutura() - calculoDaDespesaAtual();
+    }
+    
+    public void configuraLabelDoSaldoPrevisto() {
+        labelSaldoPrevisto.setText("R$ " + String.valueOf(calculaSaldoPrevisto()));
+        if (calculaSaldoPrevisto() < 0) {
+            labelSaldoPrevisto.setStyle("-fx-text-fill: red");
+        } else {
+            labelSaldoPrevisto.setStyle("-fx-text-fill: green");
+        }
+    }
+    
+    /**
+     * Configura na tela principal a cor do saldo atual exibido.
+     */
+    public void configuraLabelDoSaldoAtual() {
+        labelSaldoAtual.setText("R$ " + String.valueOf(calculaSaldoAtual()));
+        if (calculaSaldoAtual() < 0) {
+            labelSaldoAtual.setStyle("-fx-text-fill: red");
+        } else {
+            labelSaldoAtual.setStyle("-fx-text-fill: green");
+        }
+    }
+    
     @FXML
     void handleButtonInserirMovimentacao(ActionEvent event) {
+        main.exibeTelaInsereMovimentacao();
         System.out.println("Inserir movimentação");
     }
 
