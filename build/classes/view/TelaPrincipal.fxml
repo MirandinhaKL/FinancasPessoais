@@ -120,7 +120,7 @@
                                           <Insets right="15.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox fx:id="comboBoxMes" onAction="#handleComboBox" prefWidth="150.0" promptText="Selecione o mês ..." />
+                                    <ComboBox fx:id="comboBoxMes" onAction="#handleComboBoxMes" prefWidth="150.0" promptText="Selecione o mês ..." />
                                  </children>
                               </HBox>
                            </children>

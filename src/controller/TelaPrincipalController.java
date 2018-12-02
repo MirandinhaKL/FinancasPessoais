@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -73,6 +74,18 @@ public class TelaPrincipalController implements Initializable {
 
     @FXML
     void handleButtonExcluirMovimentacao(ActionEvent event) {
+        Movimentacao movimentacao = tabelaMovimentacao.getSelectionModel().getSelectedItem();
+        if (movimentacao != null) {
+            movimentacaoDAO = new MovimentacaoDAO();
+            movimentacaoDAO.removeMovimentacao(movimentacao);
+            carregarTabelaComDadosDoBanco();
+        } else {
+            String titulo = "Falha na exclusão!";
+            String cabecalho = "Item não excluído!";
+            String mensagem = "Por favor, selecione uma movimentação"
+                    + " financeira na tabela ao lado.";
+            main.mostraAlerta(Alert.AlertType.WARNING, titulo, cabecalho, mensagem);
+        }
         System.out.println("Excluir movimentação");
     }
 
@@ -82,7 +95,7 @@ public class TelaPrincipalController implements Initializable {
     }
 
     @FXML
-    void handleComboBox(ActionEvent event) {
+    void handleComboBoxMes(ActionEvent event) {
         System.out.println("Handle Combo Box");
     }
 
@@ -101,7 +114,7 @@ public class TelaPrincipalController implements Initializable {
         comboBoxMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
     }
-    
+
     private void criaTabela() {
         tabelaMovimentacao.setItems(movimentacaoObservable);
         colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
@@ -109,8 +122,8 @@ public class TelaPrincipalController implements Initializable {
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
     }
-    
-     public void carregarTabelaComDadosDoBanco() {
+
+    public void carregarTabelaComDadosDoBanco() {
         movimentacaoDAO = new MovimentacaoDAO();
         listaDeMovimentacoes = movimentacaoDAO.retornaListaDeMovimentacoes();
         movimentacaoObservable = FXCollections.observableArrayList(listaDeMovimentacoes);

@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -79,6 +80,19 @@ public class Main extends Application {
             System.out.println(excecao.getMessage());
             excecao.printStackTrace();
         }
+    }
+    
+     public void mostraAlerta(Alert.AlertType tipoDeAlerta, String titulo, String cabecalho, String mensagem){
+        Alert alerta = new Alert(tipoDeAlerta);
+        alerta.initOwner(this.getPrimeiraCena());
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(cabecalho);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
+    }
+     
+     public Stage getPrimeiraCena(){
+        return this.primeiraCena;
     }
 
     /**
