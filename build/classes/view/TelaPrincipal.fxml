@@ -18,8 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="controller.TelaPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaPrincipalController">
    <children>
       <SplitPane dividerPositions="0.336322869955157" layoutX="-3.0" prefHeight="575.0" prefWidth="800.0">
         <items>
@@ -121,14 +120,14 @@
                                           <Insets right="15.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox fx:id="comboBoxMes" onAction="#handleComboBox" prefWidth="150.0" />
+                                    <ComboBox fx:id="comboBoxMes" onAction="#handleComboBox" prefWidth="150.0" promptText="Selecione o mês ..." />
                                  </children>
                               </HBox>
                            </children>
                         </Pane>
                      </top>
                      <center>
-                        <TableView prefHeight="459.0" prefWidth="527.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tabelaMovimentacao" prefHeight="459.0" prefWidth="527.0" BorderPane.alignment="CENTER">
                           <columns>
                             <TableColumn fx:id="colunaData" prefWidth="123.0" text="Data" />
                             <TableColumn fx:id="colunaTipo" minWidth="0.0" prefWidth="137.0" text="Tipo" />
