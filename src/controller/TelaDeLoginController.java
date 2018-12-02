@@ -37,7 +37,7 @@ public class TelaDeLoginController implements Initializable {
 
     @FXML
     void handleButtonOK(ActionEvent event) {
-      //  main.exibeTelaPrincipal();
+        main.exibeTelaPrincipal();
         System.out.println("A página principal deve ser carregada.");
     }
 

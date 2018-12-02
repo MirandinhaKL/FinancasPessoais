@@ -7,6 +7,7 @@ package aplicacao;
 
 import controller.RootController;
 import controller.TelaDeLoginController;
+import controller.TelaPrincipalController;
 import java.awt.Panel;
 import java.io.IOException;
 import javafx.application.Application;
@@ -32,7 +33,7 @@ public class Main extends Application {
         this.primeiraCena = primaryStage;
         this.primeiraCena.setTitle("Gerenciador de Finanças Pessoais");
         iniciaRootLayout();
-        iniciaTelaDeLogin();
+        exibeTelaDeLogin();
     }
 
     public void iniciaRootLayout() {
@@ -52,13 +53,27 @@ public class Main extends Application {
         }
     }
 
-    public void iniciaTelaDeLogin() {
+    public void exibeTelaDeLogin() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/TelaDeLogin.fxml"));
             AnchorPane telaLogin = (AnchorPane) loader.load();
             root.setCenter(telaLogin);
             TelaDeLoginController controller = loader.getController();
+            controller.setMain(this);
+        } catch (IOException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.printStackTrace();
+        }
+    }
+    
+    public void exibeTelaPrincipal() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/TelaPrincipal.fxml"));
+            AnchorPane telaPrincipal = (AnchorPane) loader.load();
+            root.setCenter(telaPrincipal);
+            TelaPrincipalController controller = loader.getController();
             controller.setMain(this);
         } catch (IOException excecao) {
             System.out.println(excecao.getMessage());
