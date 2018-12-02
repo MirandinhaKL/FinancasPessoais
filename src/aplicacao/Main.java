@@ -6,11 +6,14 @@
 package aplicacao;
 
 import controller.RootController;
+import controller.TelaDeLoginController;
+import java.awt.Panel;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -19,18 +22,19 @@ import javafx.stage.Stage;
  * @author Mirandinha
  */
 public class Main extends Application {
-    
+
     private BorderPane root;
     private Stage primeiraCena;
     //private PrincipalController principalController;
-    
+
     @Override
     public void start(Stage primaryStage) {
         this.primeiraCena = primaryStage;
         this.primeiraCena.setTitle("Gerenciador de Finanças Pessoais");
         iniciaRootLayout();
+        iniciaTelaDeLogin();
     }
-    
+
     public void iniciaRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -47,11 +51,26 @@ public class Main extends Application {
             excecao.printStackTrace();
         }
     }
+
+    public void iniciaTelaDeLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/TelaDeLogin.fxml"));
+            AnchorPane telaLogin = (AnchorPane) loader.load();
+            root.setCenter(telaLogin);
+            TelaDeLoginController controller = loader.getController();
+            controller.setMain(this);
+        } catch (IOException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.printStackTrace();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
