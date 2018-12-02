@@ -102,7 +102,9 @@ public class Movimentacao {
         System.out.println("Descrição = " + getDescricao());
         System.out.println("Valor = R$ " + getValor());
         System.out.println("Tipo = " + getTipo().getDescricao());
+        System.out.println("ID Tipo = " + getTipo().getIdTipoMovimentacao());
         System.out.println("Categoria = " + getCategoria().getDescricao());
+        System.out.println("ID Categoria = " + getCategoria().getIdCategoria());
         System.out.println("Status da operação = " + getParaOfuturo());
     }
 
