@@ -113,7 +113,7 @@ public class CategoriaDAO {
      * @return List<Categoria> - Retorna uma lista contendo todas as categorias
      * cadastradas no BD.
      */
-    public static List<Categoria> retornaListaDeCategorias() {
+    public List<Categoria> retornaListaDeCategorias() {
         List<Categoria> listaDeCategorias = new ArrayList<>();
         String sql = "SELECT * FROM categoria;";
         try {

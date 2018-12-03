@@ -91,33 +91,36 @@
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="comboBoxStatusMovimentacao" onAction="#handleComboBoxStatusMovimentacao" prefHeight="25.0" prefWidth="211.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="186.0" text="Categoria: " GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="comboBoxCategoria" onAction="#handleComboBoxCategoria" prefHeight="25.0" prefWidth="213.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="comboBoxCategoria" onAction="#handleComboBoxCategoria" prefHeight="25.0" prefWidth="222.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="209.0" text="Data da movimentação: " GridPane.rowIndex="3" />
                               <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="98.0" text="Data: " GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <DatePicker fx:id="dataPicker" onAction="#handleDataPicker" prefHeight="25.0" prefWidth="217.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <DatePicker fx:id="dataPicker" onAction="#handleDataPicker" prefHeight="25.0" prefWidth="226.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="179.0" text="Tipo:" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <RadioButton fx:id="buttonRadioReceita" mnemonicParsing="false" onAction="#handleRadioGroupTipo" prefHeight="17.0" prefWidth="71.0" text="Receita">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="toggleGroupTipo" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="buttonRadioDespesa" mnemonicParsing="false" onAction="#handleRadioGroupTipo" text="Despesa" toggleGroup="$toggleGroupTipo" />
-                                 </children>
-                              </HBox>
                               <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="193.0" text="Descrição: " GridPane.rowIndex="5" />
                               <TextField fx:id="labelDescricao" promptText="Informe uma descrição ..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="comboBoxTipo" onAction="#handleComboBoxTipo" prefHeight="25.0" prefWidth="223.0" promptText="Selecione ..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <children>
+                                    <RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRadioGroupStatus" text="Agendada">
+                                       <HBox.margin>
+                                          <Insets right="30.0" />
+                                       </HBox.margin>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="toggleGroupStatus" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton mnemonicParsing="false" onAction="#handleRadioGroupStatus" text="Efetuada" toggleGroup="$toggleGroupStatus" />
+                                 </children>
+                              </HBox>
                            </children>
                         </GridPane>
                      </children>

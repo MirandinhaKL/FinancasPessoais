@@ -6,7 +6,7 @@ import model.dao.TipoDeMovimentacaoDAO;
 
 public class TipoMovimentacaoDAOteste {
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //================ Validação do método adiciona TipoDeMovimentação no BD. ================
 //        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
@@ -36,8 +36,8 @@ public class TipoMovimentacaoDAOteste {
 //            System.out.println("Tipo de movimentação NÃO foi removida.");
 //        }
 // ================ Validação do método remove TODOS os TipoDeMovimentação no BD. ================
-//        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
-//        conexaoTipoDeMovimentacao.apagaTodosOsTipoDeMovimentação();
+        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
+        conexaoTipoDeMovimentacao.apagaTodosOsTipoDeMovimentação();
 //================ Validação do método que retorna uma lista com todos os tipos de movimentação do BD. ================
 //        TipoDeMovimentacaoDAO dataBaseTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
 //        List<TipoDeMovimentacao> tiposDeMovDoBD = dataBaseTipoDeMovimentacao.retornaListaDosTiposDeMovimentaoes();
@@ -54,5 +54,5 @@ public class TipoMovimentacaoDAOteste {
 //        TipoDeMovimentacao tipo = new TipoDeMovimentacao();
 //        tipo.setIdTipoMovimentacao(2);
 //        conexaoTipoDeMovimentacao.retornaUmTipo(tipo).exibeTiposDeMovimetacoes();
-//    }
+    }
 }

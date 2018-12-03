@@ -7,7 +7,11 @@ package controller;
 
 import aplicacao.Main;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,20 +21,40 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-
+import model.Categoria;
+import model.Movimentacao;
+import model.TipoDeMovimentacao;
+import model.dao.CategoriaDAO;
+import model.dao.MovimentacaoDAO;
+import model.dao.TipoDeMovimentacaoDAO;
 
 public class TelaInsereMovimentacaoController implements Initializable {
-    
+
     private Main main;
     private Stage palco;
+    private String radioBtnStatus;
+    private Categoria categoria;
+    private CategoriaDAO categoriaDAO;
+    private TipoDeMovimentacao tipoMovimentacao;
+    private TipoDeMovimentacaoDAO tipoDeMovimentacaoDAO;
+    private Movimentacao movimentacao;
+    private MovimentacaoDAO movimentacaoDAO;
+    private List<Categoria> listaCategorias;
+    private List<TipoDeMovimentacao> listaTipos;
+    private ObservableList<Categoria> listaCategoriasObservable;
+    private ObservableList<TipoDeMovimentacao> listaTiposObservable;
+    private String categoriaRetornada;
+    public LocalDate dataSelecionada;
+    private String statusRetornado;
+
     @FXML
     private TextField labelValor;
 
     @FXML
-    private ComboBox<?> comboBoxStatusMovimentacao;
+    private ComboBox comboBoxTipo;
 
     @FXML
-    private ComboBox<?> comboBoxCategoria;
+    private ComboBox comboBoxCategoria;
 
     @FXML
     private DatePicker dataPicker;
@@ -39,7 +63,7 @@ public class TelaInsereMovimentacaoController implements Initializable {
     private RadioButton buttonRadioReceita;
 
     @FXML
-    private ToggleGroup toggleGroupTipo;
+    private ToggleGroup toggleGroupStatus;
 
     @FXML
     private RadioButton buttonRadioDespesa;
@@ -49,47 +73,98 @@ public class TelaInsereMovimentacaoController implements Initializable {
 
     @FXML
     void handleButtonAdicionar(ActionEvent event) {
-        System.out.println("Adicionar evento clicado.");
+
+        categoria = (Categoria) comboBoxCategoria.getSelectionModel().getSelectedItem();
+        tipoMovimentacao = (TipoDeMovimentacao) comboBoxTipo.getSelectionModel().getSelectedItem();
+
+        movimentacao = new Movimentacao();
+        movimentacao.setIdMovimentacao(0);
+        movimentacao.setValor(Double.parseDouble(labelValor.getText()));
+        movimentacao.setParaOfuturo(converteComboBoxStatus()); 
+        movimentacao.setData(dataSelecionada);
+        movimentacao.setDescricao(labelDescricao.getText());
+        movimentacao.setTipo(tipoMovimentacao);
+        movimentacao.setCategoria(categoria);
+
+        movimentacaoDAO = new MovimentacaoDAO();
+        movimentacaoDAO.adicionaMovimentacao(movimentacao);
+        main.exibeTelaPrincipal();
+
     }
 
     @FXML
     void handleButtonCancelar(ActionEvent event) {
+        main.exibeTelaPrincipal();
         System.out.println("Voltar para tela principal.");
     }
 
     @FXML
     void handleComboBoxCategoria(ActionEvent event) {
-        System.out.println("Selecionar Categoria");
+//        categoriaDAO = new CategoriaDAO();
+//        categoria = new Categoria();
+//        categoria = (Categoria) comboBoxCategoria.getSelectionModel().getSelectedItem();
+        System.out.println(categoriaRetornada);
     }
 
     @FXML
-    void handleComboBoxStatusMovimentacao(ActionEvent event) {
-        System.out.println("Status da movimentação");
+    void handleComboBoxTipo(ActionEvent event) {
+        System.out.println("fazer");
+    }
+
+    public boolean converteComboBoxStatus() {
+        if (radioBtnStatus.equalsIgnoreCase("Efetuada")) {
+            return false;
+        } else if (radioBtnStatus.equalsIgnoreCase("Agendada")) {
+            return true;
+        }
+        return false;
     }
 
     @FXML
     void handleDataPicker(ActionEvent event) {
-        System.out.println("Data selecionada");
+        dataSelecionada = dataPicker.getValue();
+        System.out.println("Data selecionada =" + dataSelecionada);
     }
 
     @FXML
-    void handleRadioGroupTipo(ActionEvent event) {
-        System.out.println("Botoes radio.");
+    void handleRadioGroupStatus(ActionEvent event) {
+        RadioButton radioSelecionado = (RadioButton) event.getSource();
+        radioBtnStatus = radioSelecionado.getText();
+        System.out.println("Verificando radioButton " + radioBtnStatus);
     }
+
+    public void preencheComboBoxCategoria() {
+        comboBoxCategoria.getItems().removeAll(comboBoxCategoria.getItems());
+        categoriaDAO = new CategoriaDAO();
+        listaCategorias = categoriaDAO.retornaListaDeCategorias();
+        listaCategoriasObservable = FXCollections.observableArrayList(listaCategorias);
+        comboBoxCategoria.setItems(listaCategoriasObservable);
+    }
+
+    public void preencheComboBoxTipo() {
+        comboBoxTipo.getItems().removeAll(comboBoxTipo.getItems());
+        tipoDeMovimentacaoDAO = new TipoDeMovimentacaoDAO();
+        listaTipos = tipoDeMovimentacaoDAO.retornaListaDosTiposDeMovimentaoes();
+        listaTiposObservable = FXCollections.observableArrayList(listaTipos);
+        comboBoxTipo.setItems(listaTiposObservable);
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
-     public void setMain(Main main) {
+        toggleGroupStatus = new ToggleGroup();
+        preencheComboBoxCategoria();
+        preencheComboBoxTipo();
+    }
+
+    public void setMain(Main main) {
         this.main = main;
     }
 
     public void setStage(Stage stage) {
         this.palco = stage;
     }
-    
+
 }

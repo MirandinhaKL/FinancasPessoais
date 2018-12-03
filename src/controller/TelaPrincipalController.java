@@ -63,16 +63,16 @@ public class TelaPrincipalController implements Initializable {
     private TableColumn<Categoria, String> colunaCategoria;
 
     @FXML
-    private TableColumn<Movimentacao, Long> colunaValor;
+    private TableColumn<Movimentacao, Double> colunaValor;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preencheComboBoxMes();
         criaTabela();
         carregarTabelaComDadosDoBanco();
-        exibeUltimaMovimentacao();
-        configuraLabelDoSaldoAtual();
-        configuraLabelDoSaldoPrevisto();
+//        exibeUltimaMovimentacao();
+//        configuraLabelDoSaldoAtual();
+//        configuraLabelDoSaldoPrevisto();
     }
 
     @FXML
@@ -162,7 +162,7 @@ public class TelaPrincipalController implements Initializable {
     }
     
     public void configuraLabelDoSaldoPrevisto() {
-        labelSaldoPrevisto.setText("R$ " + String.valueOf(calculaSaldoPrevisto()));
+        labelSaldoPrevisto.setText("R$ " + String.format("%.2f", calculaSaldoPrevisto()));
         if (calculaSaldoPrevisto() < 0) {
             labelSaldoPrevisto.setStyle("-fx-text-fill: red");
         } else {
@@ -174,7 +174,7 @@ public class TelaPrincipalController implements Initializable {
      * Configura na tela principal a cor do saldo atual exibido.
      */
     public void configuraLabelDoSaldoAtual() {
-        labelSaldoAtual.setText("R$ " + String.valueOf(calculaSaldoAtual()));
+        labelSaldoAtual.setText("R$ " + String.format("%.2f", calculaSaldoAtual()));
         if (calculaSaldoAtual() < 0) {
             labelSaldoAtual.setStyle("-fx-text-fill: red");
         } else {

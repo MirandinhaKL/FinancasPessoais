@@ -57,14 +57,14 @@ public class MovimentacaoDAOteste {
 //            System.out.println("Lista nula");
 //        }
 //      ================ Validação do método remove Movimentacao no BD. ================  
-//        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
-//        Movimentacao movimentacao = new Movimentacao();
-//        movimentacao.setIdMovimentacao(1);
-//        if (conectaBD.removeMovimentacao(movimentacao)) {
-//            System.out.println("Movimentação removida com sucesso.");
-//        } else {
-//            System.out.println("Movimentação NÃO removida!");
-//        }
+        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
+        Movimentacao movimentacao = new Movimentacao();
+        movimentacao.setIdMovimentacao(11);
+        if (conectaBD.removeMovimentacao(movimentacao)) {
+            System.out.println("Movimentação removida com sucesso.");
+        } else {
+            System.out.println("Movimentação NÃO removida!");
+        }
 //      ================ Validação do método retorna uma Movimentacao no BD. ================
 //        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
 //        Movimentacao movimentacao = new Movimentacao();
