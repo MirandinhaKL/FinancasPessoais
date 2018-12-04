@@ -83,15 +83,17 @@ public class MovimentacaoDAO {
                 movimentacao.setValor(consultaBD.getDouble("valor"));
                 movimentacao.setDescricao(consultaBD.getString("descricao"));
                 movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
-                categoria.setIdCategoria(consultaBD.getInt("id"));
-                categoria.setDescricao(consultaBD.getString("descricao"));
+                
+                //categoria.setIdCategoria(consultaBD.getInt("id"));
+                //categoria.setDescricao(consultaBD.getString("descricao"));
+                
                 tipoMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
                 tipoMovimentacao.setDescricao(consultaBD.getString("descricao"));
 
                 //Obtendo os dados completos da Categoria.
                 CategoriaDAO categoriaDAO = new CategoriaDAO();
-                categoria = categoriaDAO.retornaUmaCategoria(categoria);
-              
+                categoria = categoriaDAO.(consultaBD.getInt("id"));
+                categoria.setDescricao("Teste");
                 //Obtendo os dados completos do TipoDeMovimentação
                 TipoDeMovimentacaoDAO tipoMovimentacaoDao = new TipoDeMovimentacaoDAO();
                 tipoMovimentacao = tipoMovimentacaoDao.retornaUmTipo(tipoMovimentacao);

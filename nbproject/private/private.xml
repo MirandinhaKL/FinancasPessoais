@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/dao/teste/TipoMovimentacaoDAOteste.java</file>
-            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/dao/teste/MovimentacaoDAOteste.java</file>
+            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/Movimentacao.java</file>
+            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/dao/CategoriaDAO.java</file>
+            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/dao/teste/CategoriaDAOteste.java</file>
             <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/controller/TelaPrincipalController.java</file>
             <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/aplicacao/Main.java</file>
             <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/dao/MovimentacaoDAO.java</file>
             <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/controller/TelaInsereMovimentacaoController.java</file>
+            <file>file:/C:/Users/Mirandinha/Documents/IF/ADS/s4_desenvolvimentoDeSistemasI/TrabalhosProprios/FinancasPessoaisRevisaoII/src/model/Categoria.java</file>
         </group>
     </open-files>
 </project-private>

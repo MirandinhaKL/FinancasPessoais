@@ -71,16 +71,20 @@ public class TelaInsereMovimentacaoController implements Initializable {
     @FXML
     private TextField labelDescricao;
 
+    private TelaPrincipalController telaPrincipal;
+
     @FXML
     void handleButtonAdicionar(ActionEvent event) {
-
         categoria = (Categoria) comboBoxCategoria.getSelectionModel().getSelectedItem();
+        System.out.println(categoria);
         tipoMovimentacao = (TipoDeMovimentacao) comboBoxTipo.getSelectionModel().getSelectedItem();
-
+        System.out.println(tipoMovimentacao);
+        
+        categoria.exibeDadosCategoria();
         movimentacao = new Movimentacao();
         movimentacao.setIdMovimentacao(0);
         movimentacao.setValor(Double.parseDouble(labelValor.getText()));
-        movimentacao.setParaOfuturo(converteComboBoxStatus()); 
+        movimentacao.setParaOfuturo(converteComboBoxStatus());
         movimentacao.setData(dataSelecionada);
         movimentacao.setDescricao(labelDescricao.getText());
         movimentacao.setTipo(tipoMovimentacao);
@@ -89,7 +93,6 @@ public class TelaInsereMovimentacaoController implements Initializable {
         movimentacaoDAO = new MovimentacaoDAO();
         movimentacaoDAO.adicionaMovimentacao(movimentacao);
         main.exibeTelaPrincipal();
-
     }
 
     @FXML
@@ -101,14 +104,17 @@ public class TelaInsereMovimentacaoController implements Initializable {
     @FXML
     void handleComboBoxCategoria(ActionEvent event) {
 //        categoriaDAO = new CategoriaDAO();
-//        categoria = new Categoria();
 //        categoria = (Categoria) comboBoxCategoria.getSelectionModel().getSelectedItem();
-        System.out.println(categoriaRetornada);
+//        categoriaDAO.adicionaCategoria(categoria);
+//        System.out.println(categoria.getDescricao());
     }
 
     @FXML
     void handleComboBoxTipo(ActionEvent event) {
-        System.out.println("fazer");
+//        tipoDeMovimentacaoDAO = new TipoDeMovimentacaoDAO();
+//        tipoMovimentacao = (TipoDeMovimentacao) comboBoxTipo.getSelectionModel().getSelectedItem();
+//        tipoDeMovimentacaoDAO.adicionaTipoDeMovimentacao(tipoMovimentacao);
+//        System.out.println(tipoMovimentacao.getDescricao());
     }
 
     public boolean converteComboBoxStatus() {

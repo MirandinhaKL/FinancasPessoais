@@ -10,6 +10,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,9 +21,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import static javafx.scene.input.KeyCode.T;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Categoria;
 import model.Movimentacao;
 import model.TipoDeMovimentacao;
@@ -60,7 +65,7 @@ public class TelaPrincipalController implements Initializable {
     private TableColumn<TipoDeMovimentacao, String> colunaTipo;
 
     @FXML
-    private TableColumn<Categoria, String> colunaCategoria;
+    private TableColumn<Movimentacao, String> colunaCategoria;
 
     @FXML
     private TableColumn<Movimentacao, Double> colunaValor;
@@ -68,11 +73,11 @@ public class TelaPrincipalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preencheComboBoxMes();
-        criaTabela();
+//        criaTabela();
         carregarTabelaComDadosDoBanco();
-//        exibeUltimaMovimentacao();
-//        configuraLabelDoSaldoAtual();
-//        configuraLabelDoSaldoPrevisto();
+        //exibeUltimaMovimentacao();
+       // configuraLabelDoSaldoAtual();
+       // configuraLabelDoSaldoPrevisto();
     }
 
     @FXML
@@ -94,8 +99,8 @@ public class TelaPrincipalController implements Initializable {
     
     public void exibeUltimaMovimentacao() {
         int tamanho = movimentacaoObservable.size();
-        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).exibeTipoDeMovimentacao());
-        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho - 1).exibeValorDaMovimentacao());
+        labelTipo.setText(movimentacaoObservable.get(tamanho).exibeTipoDeMovimentacao());
+        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho).exibeValorDaMovimentacao());
     }
     
     /**
@@ -209,13 +214,13 @@ public class TelaPrincipalController implements Initializable {
                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
     }
 
-    private void criaTabela() {
-        tabelaMovimentacao.setItems(movimentacaoObservable);
-        colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
-        colunaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-    }
+//    private void criaTabela() {
+//        tabelaMovimentacao.setItems(movimentacaoObservable);
+//        colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
+//        colunaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+//        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+//        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+//    }
 
     public void carregarTabelaComDadosDoBanco() {
         movimentacaoDAO = new MovimentacaoDAO();
@@ -224,8 +229,16 @@ public class TelaPrincipalController implements Initializable {
         tabelaMovimentacao.setItems(movimentacaoObservable);
         colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
         colunaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+//        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        
+         colunaCategoria.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao()));
+//        colunaCategoria.setCellValueFactory((CellDataFeatures<Movimentacao, String> data) -> (ObservableValue<Movimentacao>) new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao()));
+//        colunaCategoria.setCellValueFactory(data -> {
+//            return new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao());
+//        });
+//        JavaBeanStringPropertyBuilder.create().bean(data.getValue()).name("categoria").build());
+    
     }
 
     public void setMain(Main main) {
