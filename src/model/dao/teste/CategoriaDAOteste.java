@@ -1,8 +1,8 @@
 package model.dao.teste;
 
 import java.util.List;
-import model.Categoria;
-import model.dao.CategoriaDAO;
+import model.property.Categoria;
+import model.dao.professor.CategoriaDAO;
 
 public class CategoriaDAOteste {
 

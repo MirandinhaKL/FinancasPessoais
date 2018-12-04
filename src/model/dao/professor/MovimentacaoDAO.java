@@ -1,5 +1,6 @@
-package model.dao;
+package model.dao.professor;
 
+import model.dao.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Categoria;
-import model.Movimentacao;
-import model.TipoDeMovimentacao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.conexao.ConexaoBancoDeDados;
+import model.property.Categoria;
+import model.property.Movimentacao;
+import model.property.TipoDeMovimentacao;
 
 /**
  * @author Mirandinha
@@ -64,15 +67,17 @@ public class MovimentacaoDAO {
     
     /**
      * Retorna uma lista contendo todas as movimentações realizadas.
-     * @return List<Movimentacao> - Lista contendo os dados cadastrado para
+     * @return ObservableList<Movimentacao> - Lista contendo os dados cadastrado para
      * todas as movimentações.
      */
-     public List<Movimentacao> retornaListaDeMovimentacoes() {
-        List<Movimentacao> listaRetornada = new ArrayList<>();
+     public ObservableList<Movimentacao> retornaListaDeMovimentacoes() {
+        ObservableList<Movimentacao> listaRetornada = FXCollections.observableArrayList();
         String sql = "SELECT * FROM movimentacao;";
+        
         try {
             PreparedStatement declaracao = conexao.prepareStatement(sql);
             ResultSet consultaBD = declaracao.executeQuery();
+            
             while (consultaBD.next()) {
                 Movimentacao movimentacao = new Movimentacao();
                 Categoria categoria = new Categoria();
@@ -83,20 +88,14 @@ public class MovimentacaoDAO {
                 movimentacao.setValor(consultaBD.getDouble("valor"));
                 movimentacao.setDescricao(consultaBD.getString("descricao"));
                 movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
-                
-                //categoria.setIdCategoria(consultaBD.getInt("id"));
-                //categoria.setDescricao(consultaBD.getString("descricao"));
-                
-                tipoMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
-                tipoMovimentacao.setDescricao(consultaBD.getString("descricao"));
 
                 //Obtendo os dados completos da Categoria.
                 CategoriaDAO categoriaDAO = new CategoriaDAO();
-                categoria = categoriaDAO.(consultaBD.getInt("id"));
-                categoria.setDescricao("Teste");
+                categoria = categoriaDAO.retornaCategoriaPeloId(consultaBD.getInt("id"));
+              
                 //Obtendo os dados completos do TipoDeMovimentação
                 TipoDeMovimentacaoDAO tipoMovimentacaoDao = new TipoDeMovimentacaoDAO();
-                tipoMovimentacao = tipoMovimentacaoDao.retornaUmTipo(tipoMovimentacao);
+                tipoMovimentacao = tipoMovimentacaoDao.retornaUmTipoPeloId(consultaBD.getInt("id"));
                 
                 movimentacao.setCategoria(categoria);
                 movimentacao.setTipo(tipoMovimentacao);
@@ -105,12 +104,13 @@ public class MovimentacaoDAO {
             declaracao.close();
             consultaBD.close();
             conexao.close();
+            return listaRetornada;
         } catch (SQLException excecao) {
             System.out.println(excecao.getErrorCode());
             System.out.println(excecao.getMessage());
             Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+            throw new RuntimeException(excecao);
         }
-        return listaRetornada;
     }
      
      /**
@@ -134,35 +134,35 @@ public class MovimentacaoDAO {
         }
     }
      
-      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
-          String sql = "SELECT * FROM movimentacao WHERE id = ?;";
-          Movimentacao retornaMovimentacao = new Movimentacao();
-          try {
-              PreparedStatement declaracao = conexao.prepareStatement(sql);
-              declaracao.setInt(1, movimentacao.getIdMovimentacao());
-              ResultSet consultaBD = declaracao.executeQuery();
-              if (consultaBD.next()) {
-                  Categoria categoria = new Categoria();
-                  TipoDeMovimentacao tipoDeMovimentacao = new TipoDeMovimentacao();
-                  movimentacao.setIdMovimentacao(consultaBD.getInt("id"));
-                  movimentacao.setData(consultaBD.getDate("datas").toLocalDate());
-                  movimentacao.setDescricao(consultaBD.getString("descricao"));
-                  movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
-                  movimentacao.setValor(consultaBD.getDouble("valor"));
-                  categoria.setIdCategoria(consultaBD.getInt("id"));
-                  categoria.setDescricao(consultaBD.getString("descricao"));
-                  tipoDeMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
-                  tipoDeMovimentacao.setDescricao(consultaBD.getString("descricao"));
-                  movimentacao.setCategoria(categoria);
-                  movimentacao.setTipo(tipoDeMovimentacao);
-                  retornaMovimentacao = movimentacao;
-                  System.out.println("DAO Movimentação retornada com sucesso.");
-              }
-          } catch (SQLException excecao) {
-               System.out.println(excecao.getMessage());
-                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
-                return null;
-          }
-          return retornaMovimentacao;
-      }
+//      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
+//          String sql = "SELECT * FROM movimentacao WHERE id = ?;";
+//          Movimentacao retornaMovimentacao = new Movimentacao();
+//          try {
+//              PreparedStatement declaracao = conexao.prepareStatement(sql);
+//              declaracao.setInt(1, movimentacao.getIdMovimentacao());
+//              ResultSet consultaBD = declaracao.executeQuery();
+//              if (consultaBD.next()) {
+//                  Categoria categoria = new Categoria();
+//                  TipoDeMovimentacao tipoDeMovimentacao = new TipoDeMovimentacao();
+//                  movimentacao.setIdMovimentacao(consultaBD.getInt("id"));
+//                  movimentacao.setData(consultaBD.getDate("datas").toLocalDate());
+//                  movimentacao.setDescricao(consultaBD.getString("descricao"));
+//                  movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
+//                  movimentacao.setValor(consultaBD.getDouble("valor"));
+//                  categoria.setIdCategoria(consultaBD.getInt("id"));
+//                  categoria.setDescricao(consultaBD.getString("descricao"));
+//                  tipoDeMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
+//                  tipoDeMovimentacao.setDescricao(consultaBD.getString("descricao"));
+//                  movimentacao.setCategoria(categoria);
+//                  movimentacao.setTipo(tipoDeMovimentacao);
+//                  retornaMovimentacao = movimentacao;
+//                  System.out.println("DAO Movimentação retornada com sucesso.");
+//              }
+//          } catch (SQLException excecao) {
+//               System.out.println(excecao.getMessage());
+//                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+//                return null;
+//          }
+//          return retornaMovimentacao;
+//      }
 }

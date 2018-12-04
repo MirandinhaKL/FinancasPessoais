@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import aplicacao.Main;
@@ -26,19 +21,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import static javafx.scene.input.KeyCode.T;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import model.Categoria;
-import model.Movimentacao;
-import model.TipoDeMovimentacao;
-import model.dao.MovimentacaoDAO;
+
+import model.property.Categoria;
+import model.property.Movimentacao;
+import model.property.TipoDeMovimentacao;
+import model.dao.professor.MovimentacaoDAO;
+
 
 public class TelaPrincipalController implements Initializable {
 
     private Main main;
     private Stage palco;
     private ObservableList<Movimentacao> movimentacaoObservable;
+    private ObservableList<Movimentacao> listaDeMovimentacoes;
     private MovimentacaoDAO movimentacaoDAO;
-    private List<Movimentacao> listaDeMovimentacoes;
 
     @FXML
     private Label labelSaldoAtual;
@@ -96,12 +92,14 @@ public class TelaPrincipalController implements Initializable {
         }
         System.out.println("Excluir movimentação");
     }
-    
-    public void exibeUltimaMovimentacao() {
-        int tamanho = movimentacaoObservable.size();
-        labelTipo.setText(movimentacaoObservable.get(tamanho).exibeTipoDeMovimentacao());
-        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho).exibeValorDaMovimentacao());
-    }
+
+//    
+//    public void exibeUltimaMovimentacao() {
+//        int tamanho = movimentacaoObservable.size();
+//        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).exibeTipoDeMovimentacao());
+//        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho - 1).exibeValorDaMovimentacao());
+//    }
+
     
     /**
      * @param tipo - Informa se a movimentação é uma receita ou despesa.

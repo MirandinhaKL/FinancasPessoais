@@ -2,12 +2,12 @@ package model.dao.teste;
 
 import java.time.LocalDate;
 import java.util.List;
-import model.Categoria;
-import model.Movimentacao;
-import model.TipoDeMovimentacao;
-import model.dao.CategoriaDAO;
-import model.dao.MovimentacaoDAO;
-import model.dao.TipoDeMovimentacaoDAO;
+import model.property.Categoria;
+import model.property.Movimentacao;
+import model.property.TipoDeMovimentacao;
+import model.dao.professor.CategoriaDAO;
+import model.dao.professor.MovimentacaoDAO;
+import model.dao.professor.TipoDeMovimentacaoDAO;
 
 public class MovimentacaoDAOteste {
 

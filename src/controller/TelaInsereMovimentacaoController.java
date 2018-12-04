@@ -21,12 +21,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import model.Categoria;
-import model.Movimentacao;
-import model.TipoDeMovimentacao;
-import model.dao.CategoriaDAO;
-import model.dao.MovimentacaoDAO;
-import model.dao.TipoDeMovimentacaoDAO;
+import model.property.Categoria;
+import model.property.Movimentacao;
+import model.property.TipoDeMovimentacao;
+import model.dao.professor.CategoriaDAO;
+import model.dao.professor.MovimentacaoDAO;
+import model.dao.professor.TipoDeMovimentacaoDAO;
 
 public class TelaInsereMovimentacaoController implements Initializable {
 
@@ -142,7 +142,7 @@ public class TelaInsereMovimentacaoController implements Initializable {
     public void preencheComboBoxCategoria() {
         comboBoxCategoria.getItems().removeAll(comboBoxCategoria.getItems());
         categoriaDAO = new CategoriaDAO();
-        listaCategorias = categoriaDAO.retornaListaDeCategorias();
+        listaCategorias = categoriaDAO.retornaListaDeCategoriasObservable();
         listaCategoriasObservable = FXCollections.observableArrayList(listaCategorias);
         comboBoxCategoria.setItems(listaCategoriasObservable);
     }
@@ -150,7 +150,7 @@ public class TelaInsereMovimentacaoController implements Initializable {
     public void preencheComboBoxTipo() {
         comboBoxTipo.getItems().removeAll(comboBoxTipo.getItems());
         tipoDeMovimentacaoDAO = new TipoDeMovimentacaoDAO();
-        listaTipos = tipoDeMovimentacaoDAO.retornaListaDosTiposDeMovimentaoes();
+        listaTipos = tipoDeMovimentacaoDAO.retornaListaDosTiposDeMovimentaoesObservable();
         listaTiposObservable = FXCollections.observableArrayList(listaTipos);
         comboBoxTipo.setItems(listaTiposObservable);
     }
