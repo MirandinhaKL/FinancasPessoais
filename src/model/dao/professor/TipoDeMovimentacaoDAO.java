@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.TipoDeMovimentacao;
 import model.conexao.ConexaoBancoDeDados;
+import model.property.TipoDeMovimentacao;
 
 /**
  * @author Mirandinha

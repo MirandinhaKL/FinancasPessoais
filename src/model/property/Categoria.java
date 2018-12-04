@@ -1,6 +1,7 @@
 package model.property;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,29 +13,22 @@ public class Categoria {
     private IntegerProperty idCategoria;
     private StringProperty descricao;
 
-    public Categoria() {
-       
-    }
     
-    public Categoria(String descricao){
-        this.descricao = new SimpleStringProperty(descricao);
-    }
-    
-    public Categoria(int idCategoria){
-        this.idCategoria = idCategoria;
-    }
-
-    public Categoria(int idCategoria, String descricao) {
-        this.idCategoria = idCategoria;
-        this.descricao = new SimpleStringProperty(descricao);
+    public Categoria(){
+        this.descricao = new SimpleStringProperty();
+        this.idCategoria = new SimpleIntegerProperty();
     }
 
     public int getIdCategoria() {
-        return idCategoria;
+        return idCategoria.get();
     }
 
     public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+        this.idCategoria.set(idCategoria);
+    }
+    
+    public IntegerProperty getIdCategoriaProperty(){
+        return idCategoria;
     }
 
     public String getDescricao() {
@@ -54,5 +48,12 @@ public class Categoria {
         System.out.println("ID = " + getIdCategoria());
         System.out.println("Descrição= " + getDescricao());
     }
+
+    @Override
+    public String toString() {
+        return "Categoria{" + "idCategoria=" + idCategoria + ", descricao=" + descricao + '}';
+    }
+     
+     
 
 }

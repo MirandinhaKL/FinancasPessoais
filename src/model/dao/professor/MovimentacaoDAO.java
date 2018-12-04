@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Categoria;
-import model.Movimentacao;
-import model.TipoDeMovimentacao;
 import model.conexao.ConexaoBancoDeDados;
+import model.property.Categoria;
+import model.property.Movimentacao;
+import model.property.TipoDeMovimentacao;
 
 /**
  * @author Mirandinha
@@ -37,33 +37,33 @@ public class MovimentacaoDAO {
      * configurado então a data, valor, descrição e status da movimentação.
      * @return boolean - Verdadeiro se a movimentação foi adicionada com sucesso.
      */
-//    public boolean adicionaMovimentacao(Movimentacao move) {
-//        String sql = "INSERT INTO movimentacao(tipo, categoria, datas, valor, descricao, pago) VALUES (?,?,?,?,?,?)";
-//        try {
-//            PreparedStatement declaracao = conexao.prepareStatement(sql);
-//            declaracao.setInt(1, move.getTipo().getIdTipoMovimentacao());
-//            // System.out.println("id categoria = " + move.getCategoria().getIdCategoria());
-//            declaracao.setInt(2, move.getCategoria().getIdCategoria());
-//            //   System.out.println("id tipo = " + move.getTipo().getIdTipoMovimentacao());
-//            declaracao.setDate(3, Date.valueOf(move.getData()));
-//            //     System.out.println("data = " + java.sql.Date.valueOf(move.getData()));
-//            declaracao.setDouble(4, move.getValor());
-//            //  System.out.println("valor = " + move.getValor());
-//            declaracao.setString(5, move.getDescricao());
-//            //  System.out.println("descrição = " + move.getDescricao());
-//            declaracao.setBoolean(6, move.getParaOfuturo());
-//            //   System.out.println("operação para o futuro: " + String.valueOf(move.getParaOfuturo()));
-//            declaracao.execute();
-//            declaracao.close();
-//            conexao.close();
-//            return true;
-//        } catch (SQLException excecao) {
-//            System.out.println(excecao.getErrorCode());
-//            System.out.println(excecao.getMessage());
-//            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
-//        }
-//        return true;
-//    }
+    public boolean adicionaMovimentacao(Movimentacao move) {
+        String sql = "INSERT INTO movimentacao(tipo, categoria, datas, valor, descricao, pago) VALUES (?,?,?,?,?,?)";
+        try {
+            PreparedStatement declaracao = conexao.prepareStatement(sql);
+            declaracao.setInt(1, move.getTipo().getIdTipoMovimentacao());
+            // System.out.println("id categoria = " + move.getCategoria().getIdCategoria());
+            declaracao.setInt(2, move.getCategoria().getIdCategoria());
+            //   System.out.println("id tipo = " + move.getTipo().getIdTipoMovimentacao());
+            declaracao.setDate(3, Date.valueOf(move.getData()));
+            //     System.out.println("data = " + java.sql.Date.valueOf(move.getData()));
+            declaracao.setDouble(4, move.getValor());
+            //  System.out.println("valor = " + move.getValor());
+            declaracao.setString(5, move.getDescricao());
+            //  System.out.println("descrição = " + move.getDescricao());
+            declaracao.setBoolean(6, move.getParaOfuturo());
+            //   System.out.println("operação para o futuro: " + String.valueOf(move.getParaOfuturo()));
+            declaracao.execute();
+            declaracao.close();
+            conexao.close();
+            return true;
+        } catch (SQLException excecao) {
+            System.out.println(excecao.getErrorCode());
+            System.out.println(excecao.getMessage());
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+        }
+        return true;
+    }
     
     /**
      * Retorna uma lista contendo todas as movimentações realizadas.
@@ -135,35 +135,35 @@ public class MovimentacaoDAO {
         }
     }
      
-      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
-          String sql = "SELECT * FROM movimentacao WHERE id = ?;";
-          Movimentacao retornaMovimentacao = new Movimentacao();
-          try {
-              PreparedStatement declaracao = conexao.prepareStatement(sql);
-              declaracao.setInt(1, movimentacao.getIdMovimentacao());
-              ResultSet consultaBD = declaracao.executeQuery();
-              if (consultaBD.next()) {
-                  Categoria categoria = new Categoria();
-                  TipoDeMovimentacao tipoDeMovimentacao = new TipoDeMovimentacao();
-                  movimentacao.setIdMovimentacao(consultaBD.getInt("id"));
-                  movimentacao.setData(consultaBD.getDate("datas").toLocalDate());
-                  movimentacao.setDescricao(consultaBD.getString("descricao"));
-                  movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
-                  movimentacao.setValor(consultaBD.getDouble("valor"));
-                  categoria.setIdCategoria(consultaBD.getInt("id"));
-                  categoria.setDescricao(consultaBD.getString("descricao"));
-                  tipoDeMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
-                  tipoDeMovimentacao.setDescricao(consultaBD.getString("descricao"));
-                  movimentacao.setCategoria(categoria);
-                  movimentacao.setTipo(tipoDeMovimentacao);
-                  retornaMovimentacao = movimentacao;
-                  System.out.println("DAO Movimentação retornada com sucesso.");
-              }
-          } catch (SQLException excecao) {
-               System.out.println(excecao.getMessage());
-                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
-                return null;
-          }
-          return retornaMovimentacao;
-      }
+//      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
+//          String sql = "SELECT * FROM movimentacao WHERE id = ?;";
+//          Movimentacao retornaMovimentacao = new Movimentacao();
+//          try {
+//              PreparedStatement declaracao = conexao.prepareStatement(sql);
+//              declaracao.setInt(1, movimentacao.getIdMovimentacao());
+//              ResultSet consultaBD = declaracao.executeQuery();
+//              if (consultaBD.next()) {
+//                  Categoria categoria = new Categoria();
+//                  TipoDeMovimentacao tipoDeMovimentacao = new TipoDeMovimentacao();
+//                  movimentacao.setIdMovimentacao(consultaBD.getInt("id"));
+//                  movimentacao.setData(consultaBD.getDate("datas").toLocalDate());
+//                  movimentacao.setDescricao(consultaBD.getString("descricao"));
+//                  movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
+//                  movimentacao.setValor(consultaBD.getDouble("valor"));
+//                  categoria.setIdCategoria(consultaBD.getInt("id"));
+//                  categoria.setDescricao(consultaBD.getString("descricao"));
+//                  tipoDeMovimentacao.setIdTipoMovimentacao(consultaBD.getInt("id"));
+//                  tipoDeMovimentacao.setDescricao(consultaBD.getString("descricao"));
+//                  movimentacao.setCategoria(categoria);
+//                  movimentacao.setTipo(tipoDeMovimentacao);
+//                  retornaMovimentacao = movimentacao;
+//                  System.out.println("DAO Movimentação retornada com sucesso.");
+//              }
+//          } catch (SQLException excecao) {
+//               System.out.println(excecao.getMessage());
+//                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+//                return null;
+//          }
+//          return retornaMovimentacao;
+//      }
 }

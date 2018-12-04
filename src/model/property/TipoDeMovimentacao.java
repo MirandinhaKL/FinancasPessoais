@@ -1,5 +1,7 @@
 package model.property;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -8,35 +10,25 @@ import javafx.beans.property.StringProperty;
  */
 public class TipoDeMovimentacao {
     
-    private int idTipoMovimentacao;
+    private IntegerProperty idTipoMovimentacao;
     private StringProperty descricao;
-    private String descricaoBD;
 
-    public TipoDeMovimentacao(int idMovimentacao, String descricao) {
-        this.idTipoMovimentacao = idMovimentacao;
-       // this.descricao = new SimpleStringProperty(descricao);
-        this.descricaoBD = descricao;
+    public TipoDeMovimentacao() {
+        this.idTipoMovimentacao = new SimpleIntegerProperty();
+        this.descricao = new SimpleStringProperty();
     }
     
-    public TipoDeMovimentacao(){
-        
-    }
-    
-     public TipoDeMovimentacao(int idMovimentacao){
-        this.idTipoMovimentacao = idMovimentacao;
-    }
-    
-    public TipoDeMovimentacao(String descricao){
-        this.descricao = new SimpleStringProperty(descricao);
-        this.descricaoBD = descricao;
-    }
     
     public int getIdTipoMovimentacao() {
-        return idTipoMovimentacao;
+        return idTipoMovimentacao.get();
     }
 
     public void setIdTipoMovimentacao(int idMovimentacao) {
-        this.idTipoMovimentacao = idMovimentacao;
+        this.idTipoMovimentacao.set(idMovimentacao);
+    }
+    
+    public IntegerProperty getIdTipoMovimentacaoProperty(){
+        return idTipoMovimentacao;
     }
 
     public String getDescricao() {
@@ -51,30 +43,14 @@ public class TipoDeMovimentacao {
         return descricao;
     }
 
-    public String getDescricaoBD() {
-        return descricaoBD;
-    }
-
-    public void setDescricaoBD(String descricaoBD) {
-        this.descricaoBD = descricaoBD;
-    }
-    
-    
      public void exibeTiposDeMovimetacoes(){
         System.out.println("=========================== ");
         System.out.println("ID = " + getIdTipoMovimentacao());
-        System.out.println("Descrição= " + getDescricaoBD());
+        System.out.println("Descrição= " + getDescricao());
     }
 
-//    @Override
-//    public String toString() {
-//        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricao=" + descricao + ", descricaoBD=" + descricaoBD + '}';
-//    }
-    
     @Override
     public String toString() {
-        return getDescricaoBD();
+        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricao=" + descricao + '}';
     }
-     
-     
 }

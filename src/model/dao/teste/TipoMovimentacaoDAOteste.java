@@ -1,8 +1,8 @@
 package model.dao.teste;
 
 import java.util.List;
-import model.TipoDeMovimentacao;
-import model.dao.TipoDeMovimentacaoDAO;
+import model.property.TipoDeMovimentacao;
+import model.dao.professor.TipoDeMovimentacaoDAO;
 
 public class TipoMovimentacaoDAOteste {
 
@@ -36,8 +36,8 @@ public class TipoMovimentacaoDAOteste {
 //            System.out.println("Tipo de movimentação NÃO foi removida.");
 //        }
 // ================ Validação do método remove TODOS os TipoDeMovimentação no BD. ================
-        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
-        conexaoTipoDeMovimentacao.apagaTodosOsTipoDeMovimentação();
+//        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
+//        conexaoTipoDeMovimentacao.apagaTodosOsTipoDeMovimentação();
 //================ Validação do método que retorna uma lista com todos os tipos de movimentação do BD. ================
 //        TipoDeMovimentacaoDAO dataBaseTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
 //        List<TipoDeMovimentacao> tiposDeMovDoBD = dataBaseTipoDeMovimentacao.retornaListaDosTiposDeMovimentaoes();
