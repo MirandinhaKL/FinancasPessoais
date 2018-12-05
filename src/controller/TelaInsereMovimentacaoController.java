@@ -142,7 +142,7 @@ public class TelaInsereMovimentacaoController implements Initializable {
     }
 
     public void preencheComboBoxTipo() {
-        comboBoxTipo.getItems().removeAll(comboBoxTipo.getItems());
+        comboBoxTipo.getItems().removeAll(comboBoxTipo.getValue());
         tipoDeMovimentacaoDAO = new TipoDeMovimentacaoDAO();
         listaTipos = tipoDeMovimentacaoDAO.retornaListaDosTiposDeMovimentaoesObservable();
         listaTiposObservable = FXCollections.observableArrayList(listaTipos);

@@ -1,7 +1,9 @@
 package model.dao.teste;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.ObservableList;
 import model.property.Categoria;
 import model.property.Movimentacao;
 import model.property.TipoDeMovimentacao;
@@ -46,25 +48,25 @@ public class MovimentacaoDAOteste {
 //            System.out.println("Movimentação não adicionada.");
 //        }
 //      ================ Validação do método retorna lista de Movimentacao no BD. ================
-//        MovimentacaoDAO conectaBanco = new MovimentacaoDAO();
-//        List<Movimentacao> listaMovimentacao = conectaBanco.retornaListaDeMovimentacoes();
-//        if (listaMovimentacao != null) {
-//            System.out.println("Listagem das movimentações:");
-//            for (int i = 0; i < listaMovimentacao.size(); i++) {
-//                listaMovimentacao.get(i).exibeTodasMovimentacoes();
-//            }
-//        } else {
-//            System.out.println("Lista nula");
-//        }
-//      ================ Validação do método remove Movimentacao no BD. ================  
-        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
-        Movimentacao movimentacao = new Movimentacao();
-        movimentacao.setIdMovimentacao(11);
-        if (conectaBD.removeMovimentacao(movimentacao)) {
-            System.out.println("Movimentação removida com sucesso.");
+        MovimentacaoDAO conectaBanco = new MovimentacaoDAO();
+        ObservableList<Movimentacao> listaMovimentacao = conectaBanco.retornaListaDeMovimentacoes();
+        if (listaMovimentacao != null) {
+            System.out.println("Listagem das movimentações:");
+            for (int i = 0; i < listaMovimentacao.size(); i++) {
+                listaMovimentacao.get(i).exibeTodasMovimentacoes();
+            }
         } else {
-            System.out.println("Movimentação NÃO removida!");
+            System.out.println("Lista nula");
         }
+//      ================ Validação do método remove Movimentacao no BD. ================  
+//        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
+//        Movimentacao movimentacao = new Movimentacao();
+//        movimentacao.setIdMovimentacao(11);
+//        if (conectaBD.removeMovimentacao(movimentacao)) {
+//            System.out.println("Movimentação removida com sucesso.");
+//        } else {
+//            System.out.println("Movimentação NÃO removida!");
+//        }
 //      ================ Validação do método retorna uma Movimentacao no BD. ================
 //        MovimentacaoDAO conectaBD = new MovimentacaoDAO();
 //        Movimentacao movimentacao = new Movimentacao();

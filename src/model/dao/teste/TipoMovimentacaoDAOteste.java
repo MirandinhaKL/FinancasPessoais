@@ -1,6 +1,7 @@
 package model.dao.teste;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import model.property.TipoDeMovimentacao;
 import model.dao.professor.TipoDeMovimentacaoDAO;
 
@@ -10,7 +11,8 @@ public class TipoMovimentacaoDAOteste {
 
 //================ Validação do método adiciona TipoDeMovimentação no BD. ================
 //        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
-//        TipoDeMovimentacao tipo = new TipoDeMovimentacao("Teste100");
+//        TipoDeMovimentacao tipo = new TipoDeMovimentacao();
+//        tipo.setDescricaoTipo("teste");
 //        if (conexaoTipoDeMovimentacao.adicionaTipoDeMovimentacao(tipo)) {
 //            System.out.println("Tipo de movimentação adicionado com sucesso!");
 //        } else {
@@ -40,7 +42,7 @@ public class TipoMovimentacaoDAOteste {
 //        conexaoTipoDeMovimentacao.apagaTodosOsTipoDeMovimentação();
 //================ Validação do método que retorna uma lista com todos os tipos de movimentação do BD. ================
 //        TipoDeMovimentacaoDAO dataBaseTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
-//        List<TipoDeMovimentacao> tiposDeMovDoBD = dataBaseTipoDeMovimentacao.retornaListaDosTiposDeMovimentaoes();
+//        ObservableList<TipoDeMovimentacao> tiposDeMovDoBD = dataBaseTipoDeMovimentacao.retornaListaDosTiposDeMovimentaoesObservable();
 //        if (tiposDeMovDoBD != null) {
 //            System.out.println("Listagem dos tipos de movimentações: ");
 //            for (int i = 0; i < tiposDeMovDoBD.size(); i++) {
@@ -50,9 +52,9 @@ public class TipoMovimentacaoDAOteste {
 //            System.out.println("Lista nula");
 //        }
 //================ Validação do método que retorna um tipo de movimentação do BD. ================
-//        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
-//        TipoDeMovimentacao tipo = new TipoDeMovimentacao();
-//        tipo.setIdTipoMovimentacao(2);
-//        conexaoTipoDeMovimentacao.retornaUmTipo(tipo).exibeTiposDeMovimetacoes();
+        TipoDeMovimentacaoDAO conexaoTipoDeMovimentacao = new TipoDeMovimentacaoDAO();
+        TipoDeMovimentacao tipo = new TipoDeMovimentacao();
+     //   tipo.setIdTipoMovimentacao(2);
+        conexaoTipoDeMovimentacao.retornaUmTipoPeloId(2).exibeTiposDeMovimetacoes();
     }
 }

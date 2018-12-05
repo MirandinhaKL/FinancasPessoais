@@ -139,7 +139,7 @@ public class Movimentacao {
         System.out.println("Data = " + getData());
         System.out.println("Descrição = " + getDescricao());
         System.out.println("Valor = R$ " + getValor());
-        System.out.println("Tipo = " + getTipo().getDescricao());
+        System.out.println("Tipo = " + getTipo().getDescricaoTipo());
         System.out.println("Categoria = " + getCategoria().getDescricao());
     }
 }

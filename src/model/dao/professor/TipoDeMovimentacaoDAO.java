@@ -34,21 +34,21 @@ public class TipoDeMovimentacaoDAO {
      * @return boolean - Verdadeiro se o tipo de movimentação foi adicionado com
      * sucesso.
      */
-//    public boolean adicionaTipoDeMovimentacao(TipoDeMovimentacao novoTipo) {
-//        String sql = "INSERT INTO tipos_movimentacao (descricao) VALUES (?);";
-//        try {
-//            PreparedStatement declaracao = conexao.prepareStatement(sql);
-//            declaracao.setString(1, novoTipo.getDescricao());
-//            declaracao.execute();
-//            declaracao.close();
-//            conexao.close();
-//            return true;
-//        } catch (SQLException excecao) {
-//            System.out.println(excecao.getMessage());
-//            excecao.getMessage();
-//            return false;
-//        }
-//    }
+    public boolean adicionaTipoDeMovimentacao(TipoDeMovimentacao novoTipo) {
+        String sql = "INSERT INTO tipos_movimentacao (descricao) VALUES (?);";
+        try {
+            PreparedStatement declaracao = conexao.prepareStatement(sql);
+            declaracao.setString(1, novoTipo.getDescricaoTipo());
+            declaracao.execute();
+            declaracao.close();
+            conexao.close();
+            return true;
+        } catch (SQLException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.getMessage();
+            return false;
+        }
+    }
     /**
      * Atualiza um tipo de movimentação existente no banco.
      *
@@ -127,14 +127,14 @@ public class TipoDeMovimentacaoDAO {
             while (consultaBD.next()) {
                 TipoDeMovimentacao tipo = new TipoDeMovimentacao();
                 tipo.setIdTipoMovimentacao(consultaBD.getInt("id"));
-                tipo.setDescricao(consultaBD.getString("descricao"));
+                tipo.setDescricaoTipo(consultaBD.getString("descricao"));
                 listaDeTiposDeMovimentacoes.add(tipo);
             }
             declaracao.close();
             consultaBD.close();
             conexao.close();
             return listaDeTiposDeMovimentacoes;
-        } catch (Exception excecao) {
+        } catch (SQLException excecao) {
             excecao.printStackTrace();
             System.out.println("Erro! Lista não retornada!");
             throw new RuntimeException(excecao);
@@ -142,10 +142,9 @@ public class TipoDeMovimentacaoDAO {
     }
 
     /**
-     * Retorna todos os tipos de movimentaçãoes cadastrados no BD.
-     *
-     * @return List<TipoDeMovimentacao> - Retorna uma lista contendo todos os
-     * tipos de movimentacoes cadastrados no BD.
+     * 
+     * @param idTipoDeMovimentacao - Recebe o id do tipo de movimentação.
+     * @return TipoDeMovimentacao - Retorna um objeto do TipoDeMovimentacao.
      */
     public TipoDeMovimentacao retornaUmTipoPeloId(int idTipoDeMovimentacao) {
         String sql = "SELECT * FROM tipos_movimentacao WHERE id = ?;";
@@ -155,7 +154,7 @@ public class TipoDeMovimentacaoDAO {
             declaracao.setInt(1, idTipoDeMovimentacao);
             ResultSet consultaBD = declaracao.executeQuery();
             if (consultaBD.next()) {
-                tipoRetornado.setDescricao(consultaBD.getString("descricao"));
+                tipoRetornado.setDescricaoTipo(consultaBD.getString("descricao"));
                 tipoRetornado.setIdTipoMovimentacao(consultaBD.getInt("id"));
             }
             declaracao.close();
