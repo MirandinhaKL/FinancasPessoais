@@ -7,6 +7,7 @@ package aplicacao;
 
 import controller.RootController;
 import controller.TelaDeLoginController;
+import controller.TelaGraficoReceitaXdespesaController;
 import controller.TelaInsereMovimentacaoController;
 import controller.TelaPrincipalController;
 import java.awt.Panel;
@@ -90,6 +91,20 @@ public class Main extends Application {
             AnchorPane telaInsereMovimentacao = (AnchorPane) loader.load();
             root.setCenter(telaInsereMovimentacao);
             TelaInsereMovimentacaoController controlador = loader.getController();
+            controlador.setMain(this);
+        } catch (IOException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.printStackTrace();
+        }
+    }
+
+    public void exibeTelaGraficoReceitaXdespesa() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/TelaGraficoReceitaXdespesa.fxml"));
+            AnchorPane telaReceitaDespesa = (AnchorPane) loader.load();
+            root.setCenter(telaReceitaDespesa);
+            TelaGraficoReceitaXdespesaController controlador = loader.getController();
             controlador.setMain(this);
         } catch (IOException excecao) {
             System.out.println(excecao.getMessage());

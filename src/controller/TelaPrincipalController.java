@@ -213,11 +213,13 @@ public class TelaPrincipalController implements Initializable {
 
     @FXML
     void handleDespesaPorCategoria(ActionEvent event) {
+        
         System.out.println("Abre tela de gráfico despesa x categoria");
     }
 
     @FXML
     void handleReceitaXdespesa(ActionEvent event) {
+        main.exibeTelaGraficoReceitaXdespesa();
         System.out.println("Abre tela gráfico receita x despesa");
     }
 

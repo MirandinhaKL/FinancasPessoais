@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.TelaGraficoReceitaXdespesaController">
+<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaGraficoReceitaXdespesaController">
    <children>
       <GridPane gridLinesVisible="true" layoutX="66.0" layoutY="60.0" prefHeight="463.0" prefWidth="666.0">
         <columnConstraints>
@@ -33,7 +39,7 @@
                   </Label>
                </top>
                <center>
-                  <BarChart prefHeight="336.0" prefWidth="666.0" BorderPane.alignment="CENTER">
+                  <BarChart fx:id="graficoDeBarras" prefHeight="336.0" prefWidth="666.0" BorderPane.alignment="CENTER">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -47,12 +53,12 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="Selecione o mes:">
+                        <Label text="Selecione o mês:">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox prefWidth="130.0">
+                        <ComboBox fx:id="coboBoxMes" onAction="#handlecoboBoxMes" prefWidth="130.0" promptText="mês ...">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
@@ -62,12 +68,12 @@
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <ComboBox prefWidth="100.0">
+                        <ComboBox fx:id="comboBoxAno" onAction="#handlecoboBoxAno" prefWidth="100.0" promptText="ano ...">
                            <HBox.margin>
                               <Insets right="60.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Gerar grafico" />
+                        <Button mnemonicParsing="false" onAction="#handleButtonGerarGrafico" prefHeight="25.0" prefWidth="107.0" text="Gerar grafico" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -81,6 +87,6 @@
             </VBox>
          </children>
       </GridPane>
-      <Button layoutX="356.0" layoutY="536.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Voltar" />
+      <Button layoutX="356.0" layoutY="536.0" mnemonicParsing="false" onAction="#handleButtonVoltar" prefHeight="25.0" prefWidth="89.0" text="Voltar" />
    </children>
 </AnchorPane>
