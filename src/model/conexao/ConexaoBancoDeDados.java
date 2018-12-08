@@ -12,7 +12,7 @@ public class ConexaoBancoDeDados {
    private static Connection conexao = null;
 
     private static final String user = "root";
-    private static final String password = "root";
+    private static final String password = "";
     private static final String url = "jdbc:mysql://localhost:3306/financas?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; //localhost/teste
 
     public static Connection getConexao() {

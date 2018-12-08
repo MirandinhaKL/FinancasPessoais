@@ -158,6 +158,11 @@ public class MovimentacaoDAO {
 //                  retornaMovimentacao = movimentacao;
 //                  System.out.println("DAO Movimentação retornada com sucesso.");
 //              }
+//      declaracao.close();
+//            consultaBD.close();;
+//            conexao.close();
+//            return autorRetornado; (REVISAR!!!!!!!!!)
+      
 //          } catch (SQLException excecao) {
 //               System.out.println(excecao.getMessage());
 //                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
