@@ -21,7 +21,7 @@ import model.property.TipoDeMovimentacao;
  * @author Mirandinha
  */
 public class MovimentacaoDAO {
-    
+
     private Connection conexao;
 
     /**
@@ -30,12 +30,14 @@ public class MovimentacaoDAO {
     public MovimentacaoDAO() {
         this.conexao = new ConexaoBancoDeDados().getConexao();
     }
-    
-     /**
+
+    /**
      * Adiciona uma nova movimentação ao BD.
-     * @param move - Obtido id do tipo de movimentação e o id da categoria, é 
+     *
+     * @param move - Obtido id do tipo de movimentação e o id da categoria, é
      * configurado então a data, valor, descrição e status da movimentação.
-     * @return boolean - Verdadeiro se a movimentação foi adicionada com sucesso.
+     * @return boolean - Verdadeiro se a movimentação foi adicionada com
+     * sucesso.
      */
     public boolean adicionaMovimentacao(Movimentacao move) {
         String sql = "INSERT INTO movimentacao(tipo, categoria, datas, valor, descricao, pago) VALUES (?,?,?,?,?,?)";
@@ -64,24 +66,23 @@ public class MovimentacaoDAO {
         }
         return true;
     }
-    
+
     /**
      * Retorna uma lista contendo todas as movimentações realizadas.
-     * @return ObservableList<Movimentacao> - Lista contendo os dados cadastrado para
-     * todas as movimentações.
+     *
+     * @return ObservableList<Movimentacao> - Lista contendo os dados cadastrado
+     * para todas as movimentações.
      */
-     public ObservableList<Movimentacao> retornaListaDeMovimentacoes() {
+    public ObservableList<Movimentacao> retornaListaDeMovimentacoes() {
         ObservableList<Movimentacao> listaRetornada = FXCollections.observableArrayList();
         String sql = "SELECT * FROM movimentacao;";
-        
+
         try {
             PreparedStatement declaracao = conexao.prepareStatement(sql);
             ResultSet consultaBD = declaracao.executeQuery();
-            
+
             while (consultaBD.next()) {
                 Movimentacao movimentacao = new Movimentacao();
-                Categoria categoria = new Categoria();
-                TipoDeMovimentacao tipoMovimentacao = new TipoDeMovimentacao();
 
                 movimentacao.setIdMovimentacao(consultaBD.getInt("id"));
                 movimentacao.setData(consultaBD.getDate("datas").toLocalDate());
@@ -89,16 +90,18 @@ public class MovimentacaoDAO {
                 movimentacao.setDescricao(consultaBD.getString("descricao"));
                 movimentacao.setParaOfuturo(consultaBD.getBoolean("pago"));
 
-                //Obtendo os dados completos da Categoria.
-                CategoriaDAO categoriaDAO = new CategoriaDAO();
-                categoria = categoriaDAO.retornaCategoriaPeloId(consultaBD.getInt("id"));
-              
                 //Obtendo os dados completos do TipoDeMovimentação
                 TipoDeMovimentacaoDAO tipoMovimentacaoDao = new TipoDeMovimentacaoDAO();
-                tipoMovimentacao = tipoMovimentacaoDao.retornaUmTipoPeloId(consultaBD.getInt("id"));
-                
-                movimentacao.setCategoria(categoria);
+                TipoDeMovimentacao tipoMovimentacao = tipoMovimentacaoDao.retornaUmTipoPeloId(consultaBD.getInt("id"));
                 movimentacao.setTipo(tipoMovimentacao);
+                
+                //Obtendo os dados completos da Categoria.
+                CategoriaDAO categoriaDAO = new CategoriaDAO();
+                Categoria categoria = categoriaDAO.retornaCategoriaPeloId(consultaBD.getInt("id"));
+                movimentacao.setCategoria(categoria);
+                
+                
+
                 listaRetornada.add(movimentacao);
             }
             declaracao.close();
@@ -112,13 +115,14 @@ public class MovimentacaoDAO {
             throw new RuntimeException(excecao);
         }
     }
-     
-     /**
-      * Remove um item movimentação do BD.
-      * @param movimentacao - Recebe um objeto (através do seu id) movimentação.
-      * @return - Verdadeiro se a movimentação foi removida com sucesso.
-      */
-      public boolean removeMovimentacao(Movimentacao movimentacao) {
+
+    /**
+     * Remove um item movimentação do BD.
+     *
+     * @param movimentacao - Recebe um objeto (através do seu id) movimentação.
+     * @return - Verdadeiro se a movimentação foi removida com sucesso.
+     */
+    public boolean removeMovimentacao(Movimentacao movimentacao) {
         String sql = "DELETE FROM movimentacao WHERE id = ?;";
         try {
             PreparedStatement declaracao = conexao.prepareStatement(sql);
@@ -133,7 +137,7 @@ public class MovimentacaoDAO {
             return false;
         }
     }
-     
+
 //      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
 //          String sql = "SELECT * FROM movimentacao WHERE id = ?;";
 //          Movimentacao retornaMovimentacao = new Movimentacao();

@@ -11,11 +11,11 @@ import javafx.beans.property.StringProperty;
 public class TipoDeMovimentacao {
     
     private IntegerProperty idTipoMovimentacao;
-    private StringProperty descricao;
+    private StringProperty descricaoTipo;
 
     public TipoDeMovimentacao() {
         this.idTipoMovimentacao = new SimpleIntegerProperty();
-        this.descricao = new SimpleStringProperty();
+        this.descricaoTipo = new SimpleStringProperty();
     }
     
     
@@ -31,26 +31,26 @@ public class TipoDeMovimentacao {
         return idTipoMovimentacao;
     }
 
-    public String getDescricao() {
-        return descricao.get();
+    public String getDescricaoTipo() {
+        return descricaoTipo.get();
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao.set(descricao);
+    public void setDescricaoTipo(String descricao) {
+        this.descricaoTipo.set(descricao);
     }
     
-    public StringProperty descricaoProperty(){
-        return descricao;
+    public StringProperty getDescricaoProperty(){
+        return descricaoTipo;
     }
 
      public void exibeTiposDeMovimetacoes(){
         System.out.println("=========================== ");
         System.out.println("ID = " + getIdTipoMovimentacao());
-        System.out.println("Descrição= " + getDescricao());
+        System.out.println("Descrição= " + getDescricaoTipo());
     }
 
     @Override
     public String toString() {
-        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricao=" + descricao + '}';
+        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricaoTipo=" + descricaoTipo + '}';
     }
 }

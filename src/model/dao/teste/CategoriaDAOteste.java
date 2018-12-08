@@ -6,7 +6,7 @@ import model.dao.professor.CategoriaDAO;
 
 public class CategoriaDAOteste {
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //         ================ Validação do método adiciona categoria no BD. ================
 //        CategoriaDAO conexaoCategoria = new CategoriaDAO();
@@ -55,9 +55,9 @@ public class CategoriaDAOteste {
 //    }
     
     //================ Validação do método que retorna uma categoria do BD. ================
-//        CategoriaDAO conexaoCategoria = new CategoriaDAO();
-//        Categoria categoria = new Categoria();
-//        categoria.setIdCategoria(5);
-//        conexaoCategoria.retornaUmaCategoria(categoria).exibeDadosCategoria();
-//    }
+        CategoriaDAO conexaoCategoria = new CategoriaDAO();
+        Categoria categoria = new Categoria();
+     //   categoria.setIdCategoria(5);
+        conexaoCategoria.retornaCategoriaPeloId(2).exibeDadosCategoria();
+    }
 }

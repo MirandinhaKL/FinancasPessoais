@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.Initializable;           
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -58,7 +58,7 @@ public class TelaPrincipalController implements Initializable {
     private TableColumn<Movimentacao, LocalDate> colunaData;
 
     @FXML
-    private TableColumn<TipoDeMovimentacao, String> colunaTipo;
+    private TableColumn<Movimentacao, String> colunaTipo;
 
     @FXML
     private TableColumn<Movimentacao, String> colunaCategoria;
@@ -66,6 +66,21 @@ public class TelaPrincipalController implements Initializable {
     @FXML
     private TableColumn<Movimentacao, Double> colunaValor;
 
+     private void criaTabela() {
+        tabelaMovimentacao.setItems(movimentacaoObservable);
+        colunaData.setCellValueFactory(cellData -> cellData.getValue().getDataProperty());
+        colunaTipo.setCellValueFactory(cellData -> cellData.getValue().getTipoProperty().get().getDescricaoProperty());
+        colunaCategoria.setCellValueFactory(cellData -> cellData.getValue().getCategoriaProperty().get().getDescricaoProperty());
+        colunaValor.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
+    }
+
+    public void carregarTabelaComDadosDoBanco() {
+        movimentacaoDAO = new MovimentacaoDAO();
+        listaDeMovimentacoes = movimentacaoDAO.retornaListaDeMovimentacoes();
+        movimentacaoObservable = FXCollections.observableArrayList(listaDeMovimentacoes);
+        criaTabela();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preencheComboBoxMes();
@@ -112,7 +127,7 @@ public class TelaPrincipalController implements Initializable {
         boolean statusDaMovimentacao;
         double somatorioMovimentacoes = 0;
         for (int i = 0; i < movimentacaoObservable.size(); i++) {
-            tipoDeMovimentacao = movimentacaoObservable.get(i).getTipo().getDescricao();
+            tipoDeMovimentacao = movimentacaoObservable.get(i).getTipo().getDescricaoTipo();
             statusDaMovimentacao = movimentacaoObservable.get(i).getParaOfuturo(); //alterada
             if (tipoDeMovimentacao.equalsIgnoreCase(tipo) && (statusDaMovimentacao == ehNofuturo)) {
                 somatorioMovimentacoes = somatorioMovimentacoes + movimentacaoObservable.get(i).getValor();
@@ -210,33 +225,6 @@ public class TelaPrincipalController implements Initializable {
         comboBoxMes.getItems().removeAll(comboBoxMes.getItems());
         comboBoxMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-    }
-
-//    private void criaTabela() {
-//        tabelaMovimentacao.setItems(movimentacaoObservable);
-//        colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
-//        colunaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-//        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-//        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-//    }
-
-    public void carregarTabelaComDadosDoBanco() {
-        movimentacaoDAO = new MovimentacaoDAO();
-        listaDeMovimentacoes = movimentacaoDAO.retornaListaDeMovimentacoes();
-        movimentacaoObservable = FXCollections.observableArrayList(listaDeMovimentacoes);
-        tabelaMovimentacao.setItems(movimentacaoObservable);
-        colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
-        colunaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-//        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        
-         colunaCategoria.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao()));
-//        colunaCategoria.setCellValueFactory((CellDataFeatures<Movimentacao, String> data) -> (ObservableValue<Movimentacao>) new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao()));
-//        colunaCategoria.setCellValueFactory(data -> {
-//            return new ReadOnlyStringWrapper(data.getValue().getCategoria().getDescricao());
-//        });
-//        JavaBeanStringPropertyBuilder.create().bean(data.getValue()).name("categoria").build());
-    
     }
 
     public void setMain(Main main) {

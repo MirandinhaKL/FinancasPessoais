@@ -21,7 +21,7 @@ CREATE TABLE movimentacao(
     datas DATE,
     valor DOUBLE,
     descricao VARCHAR(50),
-    pago CHAR(1),
+    pago BOOLEAN,
     PRIMARY KEY (id),
     FOREIGN KEY (tipo) REFERENCES tipos_movimentacao (id),
     FOREIGN KEY (categoria) REFERENCES categoria (id)
@@ -32,9 +32,9 @@ INSERT INTO `categoria` VALUES (1,'Alimentação'),(2,'Educação'),(3,'Esportes
 
 INSERT INTO `tipos_movimentacao` VALUES (1,'Receita'),(2,'Despesa');
 
-INSERT INTO movimentacao VALUES(1, 1, 1, '2018-09-09', 1258.63, 'Teste 1','s');
-INSERT INTO movimentacao VALUES(2, 2, 2, '2018-03-25', 987    , 'Teste 2', 'n');    
-
+INSERT INTO movimentacao VALUES(1, 1, 1, '2018-09-09', 1258.63, 'Teste 1', TRUE);
+INSERT INTO movimentacao VALUES(2, 2, 2, '2018-03-25', 987    , 'Teste 2', FALSE);    
+INSERT INTO movimentacao VALUES(6, 2, 11, '2018-03-25', 987    , 'Teste 6', TRUE);  
 SELECT * FROM categoria; 
 SELECT * FROM tipos_movimentacao;    
 SELECT * FROM movimentacao;   

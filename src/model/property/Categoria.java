@@ -15,8 +15,8 @@ public class Categoria {
 
     
     public Categoria(){
-        this.descricao = new SimpleStringProperty();
         this.idCategoria = new SimpleIntegerProperty();
+        this.descricao = new SimpleStringProperty();
     }
 
     public int getIdCategoria() {

@@ -29,6 +29,7 @@ public class TelaDeLoginController implements Initializable {
     @FXML
     private PasswordField lblSenha;
 
+    
     @FXML
     private Button btnOK;
 

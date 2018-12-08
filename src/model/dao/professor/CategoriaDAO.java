@@ -33,21 +33,21 @@ public class CategoriaDAO {
      * @param novaCategoria - Atributo descrição é configurado.
      * @return boolean - Verdadeiro se a categoria foi adicionada com sucesso.
      */
-//    public boolean adicionaCategoria(Categoria novaCategoria) {
-//        String sql = "INSERT INTO categoria (descricao) VALUES (?);";
-//        try {
-//            PreparedStatement declaracao = conexao.prepareStatement(sql);
-//            declaracao.setString(1, novaCategoria.getDescricao());
-//            declaracao.execute();
-//            declaracao.close();
-//            conexao.close();
-//            return true;
-//        } catch (SQLException excecao) {
-//            System.out.println(excecao.getMessage());
-//            excecao.getMessage();
-//            return false;
-//        }
-//    }
+    public boolean adicionaCategoria(Categoria novaCategoria) {
+        String sql = "INSERT INTO categoria (descricao) VALUES (?);";
+        try {
+            PreparedStatement declaracao = conexao.prepareStatement(sql);
+            declaracao.setString(1, novaCategoria.getDescricao());
+            declaracao.execute();
+            declaracao.close();
+            conexao.close();
+            return true;
+        } catch (SQLException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.getMessage();
+            return false;
+        }
+    }
     /**
      * Atualiza uma categoria existente no banco.
      *
@@ -179,7 +179,7 @@ public class CategoriaDAO {
                 retornaCategoria.setIdCategoria(consultaBD.getInt("id"));
             }
             declaracao.close();
-            consultaBD.close();;
+            consultaBD.close();
             conexao.close();
             return retornaCategoria;
         } catch (SQLException excecao) {
