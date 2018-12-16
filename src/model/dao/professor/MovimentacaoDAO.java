@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -206,36 +208,30 @@ public class MovimentacaoDAO {
         }
     }
 
-//    public List<ResultadoCategoriaMes> retornaDespesaMensalPorCategoria(int mesSelecionado) {
-//        List<ResultadoCategoriaMes> listaRetornada = new ArrayList<>();
-//        String sql = "SELECT categoria.descricao, SUM(valor) as valor "
-//                + "FROM movimentacao "
-//                + "INNER JOIN categoria ON categoria.id = movimentacao.categoria "
-//                + "WHERE movimentacao.tipo = 2 AND MONTH(movimentacao.datas) = " + mesSelecionado + " "
-//                + "GROUP BY movimentacao.categoria;";
-//        try {
-//            PreparedStatement declaracao = conexao.prepareStatement(sql);
-//            ResultSet consultaBD = declaracao.executeQuery();
-//
-//            while (consultaBD.next()) {
-//                listaRetornada.add(new ResultadoCategoriaMes(consultaBD.getString("descricao"), consultaBD.getDouble("valor")));
-//            }
-//            declaracao.close();
-//            consultaBD.close();
-//            conexao.close();
-//            return listaRetornada;
-//        } catch (SQLException excecao) {
-//            System.out.println(excecao.getErrorCode());
-//            System.out.println(excecao.getMessage());
-//            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
-//            throw new RuntimeException(excecao);
-//        }
-//    }
-//}
-    
-     public ObservableList<PieChart.Data> retornaDespesaMensalPorCategoria(int mesSelecionado) {
+    /**
+     * Remove um item movimentação do BD.
+     *
+     * @param movimentacao - Recebe um objeto (através do seu id) movimentação.
+     * @return - Verdadeiro se a movimentação foi removida com sucesso.
+     */
+    public boolean removeTodasMovimentacoes() {
+        String sql = "DELETE FROM movimentacao";
+        try {
+            PreparedStatement declaracao = conexao.prepareStatement(sql);
+            declaracao.execute();
+            declaracao.close();
+            conexao.close();
+            return true;
+        } catch (SQLException excecao) {
+            System.out.println(excecao.getMessage());
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+            return false;
+        }
+    }
+
+    public ObservableList<PieChart.Data> retornaDespesaMensalPorCategoria(int mesSelecionado) {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        
+
         String sql = "SELECT categoria.descricao, SUM(valor) as valor "
                 + "FROM movimentacao "
                 + "INNER JOIN categoria ON categoria.id = movimentacao.categoria "
@@ -259,7 +255,38 @@ public class MovimentacaoDAO {
             throw new RuntimeException(excecao);
         }
     }
-}
+
+    public Map<Integer, ArrayList> listarTiposPorMes() {
+        String sql = "SELECT SUM(valor), EXTRACT(YEAR FROM datas) AS ano, "
+                + "EXTRACT(MONTH FROM datas) AS mes FROM movimentacao "
+                + "GROUP BY ano, mes ORDER BY ano, mes;";
+        Map<Integer, ArrayList> retorno = new HashMap();
+
+        try {
+            PreparedStatement declaracao = conexao.prepareStatement(sql);
+            ResultSet consultaBD = declaracao.executeQuery();
+
+            while (consultaBD.next()) {
+                ArrayList linha = new ArrayList();
+                if (!retorno.containsKey(consultaBD.getInt("ano"))) {
+                    linha.add(consultaBD.getString("mes"));
+                    linha.add(consultaBD.getDouble("SUM(valor)"));
+                    retorno.put(consultaBD.getInt("ano"), linha);
+                } else {
+                    ArrayList linhaNova = retorno.get(consultaBD.getInt("ano"));
+                    linhaNova.add(consultaBD.getInt("mes"));
+                    linhaNova.add(consultaBD.getDouble("SUM(valor)"));
+                }
+                System.out.println(retorno.toString());
+            }
+            return retorno;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+};
 
 //      public Movimentacao retornaUmaMovimentacao(Movimentacao movimentacao){
 //          String sql = "SELECT * FROM movimentacao WHERE id = ?;";

@@ -1,38 +1,41 @@
 package model.property;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  * @author Mirandinha
  */
 public class ResultadoCategoriaMes {
 
-    private String categoria;
-    private double valorSomado;
+    private StringProperty categoria;
+    private DoubleProperty valorSomado;
     
     public ResultadoCategoriaMes(String nomeCategoria, double somatorio) {
-        this.categoria = nomeCategoria;
-        this.valorSomado = somatorio;
+        this.categoria = new SimpleStringProperty(nomeCategoria);
+        this.valorSomado = new SimpleDoubleProperty(somatorio);
     }
-    
-    public String getCategoria() {
+
+    public StringProperty getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(StringProperty categoria) {
         this.categoria = categoria;
     }
 
-    public double getValorSomado() {
+    public DoubleProperty getValorSomado() {
         return valorSomado;
     }
 
-    public void setValorSomado(double valorSomado) {
+    public void setValorSomado(DoubleProperty valorSomado) {
         this.valorSomado = valorSomado;
     }
-
+    
     @Override
     public String toString() {
         return "ResultadoCategoriaMes{" + "categoria=" + categoria + ", valorSomado=" + valorSomado + '}';
     }
-    
-    
 }

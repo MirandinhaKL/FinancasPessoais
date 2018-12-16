@@ -107,23 +107,13 @@ public class TelaPrincipalController implements Initializable {
         }
         System.out.println("Excluir movimentação");
     }
-
-    /**
-     * Método evita um erro que acontece se o usuário remover uma movimentação,
-     * no mês atua, sem ter clicado sobre nenhum mês no comboBoxMes.
-     */
-//    public void testaComboBox() {
-//        if (comboBoxMes.getValue().getMonthValue() <= 11) {
-//            carregarTabelaComDadosDoBanco(comboBoxMes.getValue().getMonthValue());
-//        } else {
-//            carregarTabelaComDadosDoBanco(LocalDate.now().getMonthValue());
-//        }
-//    }
-
+    
     public void exibeUltimaMovimentacao() {
         int tamanho = movimentacaoObservable.size();
-        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).getTipo().getDescricaoTipo());
-        labelUltimaMovimentacao.setText("R$= " + movimentacaoObservable.get(tamanho - 1).exibeValor());
+        if (tamanho != 0) {
+            labelTipo.setText(movimentacaoObservable.get(tamanho - 1).getTipo().getDescricaoTipo());
+            labelUltimaMovimentacao.setText("R$= " + movimentacaoObservable.get(tamanho - 1).exibeValor());
+        }
     }
 
     @FXML
@@ -176,7 +166,6 @@ public class TelaPrincipalController implements Initializable {
             }
         });
     }
-    
 
     /**
      * @param tipo - Informa se a movimentação é uma receita ou despesa.
@@ -275,5 +264,5 @@ public class TelaPrincipalController implements Initializable {
     public void setStage(Stage stageLogin) {
         this.palco = stageLogin;
     }
-    
+
 }

@@ -49,12 +49,11 @@
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="comboBoxMes" onAction="#handleComboBoxMes" prefWidth="130.0">
+                        <ComboBox fx:id="comboBoxMes" onAction="#handleComboBoxMes" prefHeight="25.0" prefWidth="175.0">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" onAction="#handleButtonGerarGrafico" prefHeight="25.0" prefWidth="107.0" text="Gerar gráfico" />
                      </children>
                      <opaqueInsets>
                         <Insets />

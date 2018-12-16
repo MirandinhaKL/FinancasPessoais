@@ -41,10 +41,10 @@
                <center>
                   <BarChart fx:id="graficoDeBarras" prefHeight="336.0" prefWidth="666.0" BorderPane.alignment="CENTER">
                     <xAxis>
-                      <CategoryAxis side="BOTTOM" />
+                      <CategoryAxis fx:id="eixoX" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis side="LEFT" />
+                      <NumberAxis fx:id="eixoY" side="LEFT" />
                     </yAxis>
                   </BarChart>
                </center>
@@ -53,22 +53,12 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="Selecione o mês:">
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </Label>
-                        <ComboBox fx:id="coboBoxMes" onAction="#handlecoboBoxMes" prefWidth="130.0" promptText="mês ...">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </ComboBox>
                         <Label text="Selecione o ano:">
                            <padding>
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <ComboBox fx:id="comboBoxAno" onAction="#handlecoboBoxAno" prefWidth="100.0" promptText="ano ...">
+                        <ComboBox fx:id="comboBoxAno" onAction="#handleComboBoxAno" prefWidth="100.0" promptText="ano ...">
                            <HBox.margin>
                               <Insets right="60.0" />
                            </HBox.margin>

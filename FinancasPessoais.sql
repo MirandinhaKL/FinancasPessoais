@@ -42,3 +42,24 @@ SELECT * FROM categoria;
 SELECT * FROM tipos_movimentacao;    
 SELECT * FROM movimentacao;   
 SELECT DISTINCT YEAR(datas) AS ano FROM movimentacao ORDER BY ano DESC;
+
+SELECT * FROM movimentacao
+WHERE tipo = 2 AND MONTH(datas) = 12 AND YEAR(datas) = 2018 
+GROUP BY movimentacao.categoria;
+
+SELECT categoria.descricao, SUM(valor) as valor 
+FROM movimentacao 
+INNER JOIN categoria ON categoria.id = movimentacao.categoria
+WHERE movimentacao.tipo = 2 AND MONTH(movimentacao.datas) = 12 
+GROUP BY movimentacao.tipo;
+
+SELECT tipo_movimentacao.descricao, SUM(valor) as valor 
+FROM movimentacao 
+INNER JOIN tipo_movimentacao ON tipo_movimentacao.id = movimentacao.tipo
+WHERE movimentacao.tipo = 2 AND YEAR(movimentacao.datas) = 12 
+GROUP BY movimentacao.categoria;
+
+SELECT SUM(valor), 
+EXTRACT(YEAR FROM datas) AS ano, 
+EXTRACT(MONTH FROM datas) AS mes FROM movimentacao 
+GROUP BY ano, mes ORDER BY ano, mes;

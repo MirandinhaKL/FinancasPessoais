@@ -54,14 +54,6 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preencheComboBoxMes();
-//        preencheComboBoxAno();
-    }
-
-    @FXML
-    void handleButtonGerarGrafico(ActionEvent event) {
-        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
-        pieChart.getData().addAll(movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado));
-        pieChart.setVisible(true);
     }
 
     @FXML
@@ -70,17 +62,12 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
     }
 
     @FXML
-    void handleComboBoxAno(ActionEvent event) {
-        System.out.println("teste");
-    }
-
-    @FXML
-    void handleComboBoxMes(ActionEvent event
-    ) {
+    void handleComboBoxMes(ActionEvent event) {
+        pieChart.getData().clear();
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
         listaDeMovimentacao = movimentacaoDAO.filtroMes(LocalDate.now().getMonthValue());
         mesSelecionado = comboBoxMes.getValue().getMonthValue();
-        System.out.println(comboBoxMes.getValue().getMonthValue());
+        geraGrafico();
     }
 
     public void preencheComboBoxMes() {
@@ -107,6 +94,12 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
                         .collect(Collectors.toList()).get(0);
             }
         });
+    }
+
+    public void geraGrafico() {
+        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
+        pieChart.getData().addAll(movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado));
+        pieChart.setVisible(true);
     }
 
     public void setMain(Main main) {
