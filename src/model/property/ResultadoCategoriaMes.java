@@ -13,11 +13,6 @@ public class ResultadoCategoriaMes {
         this.valorSomado = somatorio;
     }
     
-//    public ResultadoCategoriaMes(String nomeCategoria, double somatorio) {
-//        this.categoria = nomeCategoria;
-//        this.valorSomado = somatorio;
-//    }
-
     public String getCategoria() {
         return categoria;
     }
@@ -33,4 +28,11 @@ public class ResultadoCategoriaMes {
     public void setValorSomado(double valorSomado) {
         this.valorSomado = valorSomado;
     }
+
+    @Override
+    public String toString() {
+        return "ResultadoCategoriaMes{" + "categoria=" + categoria + ", valorSomado=" + valorSomado + '}';
+    }
+    
+    
 }

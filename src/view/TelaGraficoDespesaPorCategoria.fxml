@@ -49,22 +49,12 @@
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="comboBoxMes" onAction="#handleComboBoxMes" prefWidth="130.0" promptText="mês ...">
+                        <ComboBox fx:id="comboBoxMes" onAction="#handleComboBoxMes" prefWidth="130.0">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Label text="Selecione o ano:">
-                           <padding>
-                              <Insets right="15.0" />
-                           </padding>
-                        </Label>
-                        <ComboBox fx:id="comboBoxAno" onAction="#handleComboBoxAno" prefWidth="100.0" promptText="ano ...">
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </ComboBox>
-                        <Button mnemonicParsing="false" onAction="#handleButtonGerarGrafico" prefHeight="25.0" prefWidth="107.0" text="Gerar grafico" />
+                        <Button mnemonicParsing="false" onAction="#handleButtonGerarGrafico" prefHeight="25.0" prefWidth="107.0" text="Gerar gráfico" />
                      </children>
                      <opaqueInsets>
                         <Insets />

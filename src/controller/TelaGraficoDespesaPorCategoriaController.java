@@ -11,14 +11,20 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.dao.professor.MovimentacaoDAO;
 import model.property.Movimentacao;
+import model.property.ResultadoCategoriaMes;
 
 public class TelaGraficoDespesaPorCategoriaController implements Initializable {
 
@@ -27,8 +33,9 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
     private TelaPrincipalController telaPrincipal;
     private MovimentacaoDAO movimentacaoDAO;
     private List<Movimentacao> listaDeAno = new ArrayList<>();
+    private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    private ObservableList<ResultadoCategoriaMes> listaDeCategoriasPorMes;
     private ObservableList<Movimentacao> listaDeMovimentacao;
-    private ObservableList<Movimentacao> listaDeCategoriasPorMes;
     private int mesSelecionado;
     private double somatorio;
 
@@ -50,13 +57,12 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
 //        preencheComboBoxAno();
     }
 
-//    @FXML
-//    void handleButtonGerarGrafico(ActionEvent event) {
-//        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
-//        movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado);
-//        System.out.println( this.movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado));
-////        listaDeCategoriasPorMes = movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado);
-//    }
+    @FXML
+    void handleButtonGerarGrafico(ActionEvent event) {
+        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
+        pieChart.getData().addAll(movimentacaoDAO.retornaDespesaMensalPorCategoria(mesSelecionado));
+        pieChart.setVisible(true);
+    }
 
     @FXML
     void handleButtonVoltar(ActionEvent event) {
@@ -65,11 +71,12 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
 
     @FXML
     void handleComboBoxAno(ActionEvent event) {
-
+        System.out.println("teste");
     }
 
     @FXML
-    void handleComboBoxMes(ActionEvent event) {
+    void handleComboBoxMes(ActionEvent event
+    ) {
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
         listaDeMovimentacao = movimentacaoDAO.filtroMes(LocalDate.now().getMonthValue());
         mesSelecionado = comboBoxMes.getValue().getMonthValue();
@@ -102,13 +109,6 @@ public class TelaGraficoDespesaPorCategoriaController implements Initializable {
         });
     }
 
-//    public void preencheComboBoxAno() {
-//        comboBoxAno.getItems().removeAll(comboBoxAno.getItems());
-//        movimentacaoDAO = new MovimentacaoDAO();
-//        listaDeAno = movimentacaoDAO.retornaListaDeAnos();
-//        listaDeAnoObservable = FXCollections.observableArrayList(listaDeAno);
-//        comboBoxAno.setItems(listaDeAnoObservable);
-//    }
     public void setMain(Main main) {
         this.main = main;
     }

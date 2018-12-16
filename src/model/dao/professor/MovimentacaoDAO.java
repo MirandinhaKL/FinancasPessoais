@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import model.conexao.ConexaoBancoDeDados;
 import model.property.Categoria;
 import model.property.Movimentacao;
@@ -205,8 +206,36 @@ public class MovimentacaoDAO {
         }
     }
 
-    public List<ResultadoCategoriaMes> retornaDespesaMensalPorCategoria(int mesSelecionado) {
-        List<ResultadoCategoriaMes> listaRetornada = new ArrayList<>();
+//    public List<ResultadoCategoriaMes> retornaDespesaMensalPorCategoria(int mesSelecionado) {
+//        List<ResultadoCategoriaMes> listaRetornada = new ArrayList<>();
+//        String sql = "SELECT categoria.descricao, SUM(valor) as valor "
+//                + "FROM movimentacao "
+//                + "INNER JOIN categoria ON categoria.id = movimentacao.categoria "
+//                + "WHERE movimentacao.tipo = 2 AND MONTH(movimentacao.datas) = " + mesSelecionado + " "
+//                + "GROUP BY movimentacao.categoria;";
+//        try {
+//            PreparedStatement declaracao = conexao.prepareStatement(sql);
+//            ResultSet consultaBD = declaracao.executeQuery();
+//
+//            while (consultaBD.next()) {
+//                listaRetornada.add(new ResultadoCategoriaMes(consultaBD.getString("descricao"), consultaBD.getDouble("valor")));
+//            }
+//            declaracao.close();
+//            consultaBD.close();
+//            conexao.close();
+//            return listaRetornada;
+//        } catch (SQLException excecao) {
+//            System.out.println(excecao.getErrorCode());
+//            System.out.println(excecao.getMessage());
+//            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, null, excecao);
+//            throw new RuntimeException(excecao);
+//        }
+//    }
+//}
+    
+     public ObservableList<PieChart.Data> retornaDespesaMensalPorCategoria(int mesSelecionado) {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        
         String sql = "SELECT categoria.descricao, SUM(valor) as valor "
                 + "FROM movimentacao "
                 + "INNER JOIN categoria ON categoria.id = movimentacao.categoria "
@@ -217,12 +246,12 @@ public class MovimentacaoDAO {
             ResultSet consultaBD = declaracao.executeQuery();
 
             while (consultaBD.next()) {
-                listaRetornada.add(new ResultadoCategoriaMes(consultaBD.getString("descricao"), consultaBD.getDouble("valor")));
+                pieChartData.add(new PieChart.Data(consultaBD.getString("descricao"), consultaBD.getDouble("valor")));
             }
             declaracao.close();
             consultaBD.close();
             conexao.close();
-            return listaRetornada;
+            return pieChartData;
         } catch (SQLException excecao) {
             System.out.println(excecao.getErrorCode());
             System.out.println(excecao.getMessage());
