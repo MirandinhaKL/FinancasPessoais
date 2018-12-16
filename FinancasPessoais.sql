@@ -33,8 +33,12 @@ INSERT INTO `categoria` VALUES (1,'Alimentação'),(2,'Educação'),(3,'Esportes
 INSERT INTO `tipos_movimentacao` VALUES (1,'Receita'),(2,'Despesa');
 
 INSERT INTO movimentacao VALUES(1, 1, 1, '2018-09-09', 1258.63, 'Teste 1', TRUE);
-INSERT INTO movimentacao VALUES(2, 2, 2, '2018-03-25', 987    , 'Teste 2', FALSE);    
-INSERT INTO movimentacao VALUES(6, 2, 11, '2018-03-25', 987    , 'Teste 6', TRUE);  
+INSERT INTO movimentacao VALUES(2, 2, 2, '2018-03-25', 987, 'Teste 2', FALSE);     
+INSERT INTO movimentacao VALUES(3, 1, 3, '2018-01-25', 100.27 , 'Teste 6', TRUE); 
+INSERT INTO movimentacao VALUES(4, 2, 3, '2018-01-25', 100.27 , 'Teste 6', TRUE); 
+INSERT INTO movimentacao VALUES(100, 2, 3, '2018-01-25', 100.27 , 'Teste 6', TRUE); 
+
 SELECT * FROM categoria; 
 SELECT * FROM tipos_movimentacao;    
 SELECT * FROM movimentacao;   
+SELECT DISTINCT YEAR(datas) AS ano FROM movimentacao ORDER BY ano DESC;

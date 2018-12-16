@@ -51,6 +51,11 @@ public class TipoDeMovimentacao {
 
     @Override
     public String toString() {
-        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricaoTipo=" + descricaoTipo + '}';
+        return getDescricaoTipo();
     }
+    
+//     @Override
+//    public String toString() {
+//        return "TipoDeMovimentacao{" + "idTipoMovimentacao=" + idTipoMovimentacao + ", descricaoTipo=" + descricaoTipo + '}';
+//    }
 }

@@ -132,6 +132,10 @@ public class Movimentacao {
     public Categoria getCategoria(){
         return categoria.get();
     }
+    
+    public String exibeValor(){
+        return Double.toString(getValor());
+    }
 
     public void exibeTodasMovimentacoes() {
         System.out.println("=========================== ");

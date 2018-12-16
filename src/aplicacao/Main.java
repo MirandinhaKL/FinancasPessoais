@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aplicacao;
 
 import controller.RootController;
 import controller.TelaDeLoginController;
+import controller.TelaGraficoDespesaPorCategoriaController;
 import controller.TelaGraficoReceitaXdespesaController;
 import controller.TelaInsereMovimentacaoController;
 import controller.TelaPrincipalController;
@@ -29,7 +25,7 @@ public class Main extends Application {
 
     private BorderPane root;
     private Stage primeiraCena;
-    //private PrincipalController principalController;
+    private TelaPrincipalController principalController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -76,8 +72,8 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("/view/TelaPrincipal.fxml"));
             AnchorPane telaPrincipal = (AnchorPane) loader.load();
             root.setCenter(telaPrincipal);
-            TelaPrincipalController controller = loader.getController();
-            controller.setMain(this);
+            principalController = loader.getController();
+            principalController.setMain(this);
         } catch (IOException excecao) {
             System.out.println(excecao.getMessage());
             excecao.printStackTrace();
@@ -112,6 +108,20 @@ public class Main extends Application {
         }
     }
 
+    public void exibeTelaGraficoDespesaPorCategoria() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/view/TelaGraficoDespesaPorCategoria.fxml"));
+            AnchorPane telaDespesa = (AnchorPane) loader.load();
+            root.setCenter(telaDespesa);
+            TelaGraficoDespesaPorCategoriaController controlador = loader.getController();
+            controlador.setMain(this);
+        } catch (IOException excecao) {
+            System.out.println(excecao.getMessage());
+            excecao.printStackTrace();
+        }
+    }
+
     public void mostraAlerta(Alert.AlertType tipoDeAlerta, String titulo, String cabecalho, String mensagem) {
         Alert alerta = new Alert(tipoDeAlerta);
         alerta.initOwner(this.getPrimeiraCena());
@@ -123,6 +133,10 @@ public class Main extends Application {
 
     public Stage getPrimeiraCena() {
         return this.primeiraCena;
+    }
+    
+    public TelaPrincipalController getTelaPrincipal(){
+        return this.principalController;
     }
 
     /**

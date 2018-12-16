@@ -3,30 +3,29 @@ package controller;
 import aplicacao.Main;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import java.util.stream.Collectors;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;           
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import static javafx.scene.input.KeyCode.T;
 import javafx.stage.Stage;
-
-import model.property.Categoria;
+import javafx.util.StringConverter;
 import model.property.Movimentacao;
-import model.property.TipoDeMovimentacao;
 import model.dao.professor.MovimentacaoDAO;
-
+import model.property.TipoDeMovimentacao;
 
 public class TelaPrincipalController implements Initializable {
 
@@ -49,7 +48,7 @@ public class TelaPrincipalController implements Initializable {
     private Label labelUltimaMovimentacao;
 
     @FXML
-    private ComboBox<String> comboBoxMes;
+    private ComboBox<LocalDate> comboBoxMes;
 
     @FXML
     private TableView<Movimentacao> tabelaMovimentacao;
@@ -66,29 +65,29 @@ public class TelaPrincipalController implements Initializable {
     @FXML
     private TableColumn<Movimentacao, Double> colunaValor;
 
-     private void criaTabela() {
-        tabelaMovimentacao.setItems(movimentacaoObservable);
-        colunaData.setCellValueFactory(cellData -> cellData.getValue().getDataProperty());
-        colunaTipo.setCellValueFactory(cellData -> cellData.getValue().getTipoProperty().get().getDescricaoProperty());
-        colunaCategoria.setCellValueFactory(cellData -> cellData.getValue().getCategoriaProperty().get().getDescricaoProperty());
-        colunaValor.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
-    }
-
-    public void carregarTabelaComDadosDoBanco() {
-        movimentacaoDAO = new MovimentacaoDAO();
-        listaDeMovimentacoes = movimentacaoDAO.retornaListaDeMovimentacoes();
-        movimentacaoObservable = FXCollections.observableArrayList(listaDeMovimentacoes);
-        criaTabela();
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preencheComboBoxMes();
-//        criaTabela();
-        carregarTabelaComDadosDoBanco();
-        //exibeUltimaMovimentacao();
-       // configuraLabelDoSaldoAtual();
-       // configuraLabelDoSaldoPrevisto();
+        carregarTabelaComDadosDoBanco(LocalDate.now().getMonthValue());
+        exibeUltimaMovimentacao();
+        configuraLabelDoSaldoAtual();
+        configuraLabelDoSaldoPrevisto();
+    }
+
+    private void inicializaColunas() {
+
+        colunaData.setCellValueFactory(cellData -> cellData.getValue().getDataProperty());
+        colunaTipo.setCellValueFactory(cellData -> cellData.getValue().getTipo().getDescricaoProperty());
+        colunaCategoria.setCellValueFactory(cellData -> cellData.getValue().getCategoria().getDescricaoProperty());
+        colunaValor.setCellValueFactory(cellData -> cellData.getValue().getValorProperty().asObject());
+    }
+
+    public void carregarTabelaComDadosDoBanco(int mes) {
+        movimentacaoDAO = new MovimentacaoDAO();
+        listaDeMovimentacoes = movimentacaoDAO.filtroMes(mes);
+        movimentacaoObservable = FXCollections.observableArrayList(listaDeMovimentacoes);
+        tabelaMovimentacao.setItems(movimentacaoObservable);
+        inicializaColunas();
     }
 
     @FXML
@@ -97,7 +96,8 @@ public class TelaPrincipalController implements Initializable {
         if (movimentacao != null) {
             movimentacaoDAO = new MovimentacaoDAO();
             movimentacaoDAO.removeMovimentacao(movimentacao);
-            carregarTabelaComDadosDoBanco();
+            carregarTabelaComDadosDoBanco(LocalDate.now().getMonthValue());
+            atualizaValores();
         } else {
             String titulo = "Falha na exclusão!";
             String cabecalho = "Item não excluído!";
@@ -108,14 +108,76 @@ public class TelaPrincipalController implements Initializable {
         System.out.println("Excluir movimentação");
     }
 
-//    
-//    public void exibeUltimaMovimentacao() {
-//        int tamanho = movimentacaoObservable.size();
-//        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).exibeTipoDeMovimentacao());
-//        labelUltimaMovimentacao.setText(movimentacaoObservable.get(tamanho - 1).exibeValorDaMovimentacao());
+    /**
+     * Método evita um erro que acontece se o usuário remover uma movimentação,
+     * no mês atua, sem ter clicado sobre nenhum mês no comboBoxMes.
+     */
+//    public void testaComboBox() {
+//        if (comboBoxMes.getValue().getMonthValue() <= 11) {
+//            carregarTabelaComDadosDoBanco(comboBoxMes.getValue().getMonthValue());
+//        } else {
+//            carregarTabelaComDadosDoBanco(LocalDate.now().getMonthValue());
+//        }
 //    }
 
+    public void exibeUltimaMovimentacao() {
+        int tamanho = movimentacaoObservable.size();
+        labelTipo.setText(movimentacaoObservable.get(tamanho - 1).getTipo().getDescricaoTipo());
+        labelUltimaMovimentacao.setText("R$= " + movimentacaoObservable.get(tamanho - 1).exibeValor());
+    }
+
+    @FXML
+    void handleButtonInserirMovimentacao(ActionEvent event) {
+        main.exibeTelaInsereMovimentacao();
+        atualizaValores();
+    }
+
+    @FXML
+    void handleComboBoxMes(ActionEvent event) {
+        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
+        listaDeMovimentacoes = movimentacaoDAO.filtroMes(LocalDate.now().getMonthValue());
+        carregarTabelaComDadosDoBanco(comboBoxMes.getValue().getMonthValue());
+
+    }
+
+    @FXML
+    void handleDespesaPorCategoria(ActionEvent event) {
+        main.exibeTelaGraficoDespesaPorCategoria();
+        System.out.println("Abre tela de gráfico despesa x categoria");
+    }
+
+    @FXML
+    void handleReceitaXdespesa(ActionEvent event) {
+        main.exibeTelaGraficoReceitaXdespesa();
+        System.out.println("Abre tela gráfico receita x despesa");
+    }
+
+    public void preencheComboBoxMes() {
+        comboBoxMes.getItems().removeAll(comboBoxMes.getItems());
+        List<LocalDate> meses = new ArrayList<LocalDate>();
+        for (int mes = 1; mes <= 12; mes++) {
+            meses.add(LocalDate.of(1900, mes, 1));
+        }
+        ObservableList<LocalDate> mesesObservable = FXCollections.observableArrayList();
+        mesesObservable.addAll(meses);
+
+        comboBoxMes.setItems(mesesObservable);
+        comboBoxMes.setConverter(new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate data) {
+                return data.format(DateTimeFormatter.ofPattern("MMMM"));
+            }
+
+            @Override
+            public LocalDate fromString(String numeroMes) {
+                return mesesObservable.stream()
+                        .filter(meses -> meses.getMonthValue() == Integer.valueOf(numeroMes))
+                        .collect(Collectors.toList()).get(0);
+            }
+        });
+    }
     
+
     /**
      * @param tipo - Informa se a movimentação é uma receita ou despesa.
      * @param ehNofuturo boolean = 0, se já aconteceu. 1, se a operação foi
@@ -135,7 +197,7 @@ public class TelaPrincipalController implements Initializable {
         }
         return somatorioMovimentacoes;
     }
-    
+
     /**
      * @return Somatório das desepesas efetuadas.
      */
@@ -178,7 +240,7 @@ public class TelaPrincipalController implements Initializable {
     public double calculaSaldoPrevisto() {
         return calculoDaReceitaFutura() + calculaDaReceitaAtual() - calculaDaDespesaFutura() - calculoDaDespesaAtual();
     }
-    
+
     public void configuraLabelDoSaldoPrevisto() {
         labelSaldoPrevisto.setText("R$ " + String.format("%.2f", calculaSaldoPrevisto()));
         if (calculaSaldoPrevisto() < 0) {
@@ -187,7 +249,7 @@ public class TelaPrincipalController implements Initializable {
             labelSaldoPrevisto.setStyle("-fx-text-fill: green");
         }
     }
-    
+
     /**
      * Configura na tela principal a cor do saldo atual exibido.
      */
@@ -199,34 +261,11 @@ public class TelaPrincipalController implements Initializable {
             labelSaldoAtual.setStyle("-fx-text-fill: green");
         }
     }
-    
-    @FXML
-    void handleButtonInserirMovimentacao(ActionEvent event) {
-        main.exibeTelaInsereMovimentacao();
-        System.out.println("Inserir movimentação");
-    }
 
-    @FXML
-    void handleComboBoxMes(ActionEvent event) {
-        System.out.println("Handle Combo Box");
-    }
-
-    @FXML
-    void handleDespesaPorCategoria(ActionEvent event) {
-        
-        System.out.println("Abre tela de gráfico despesa x categoria");
-    }
-
-    @FXML
-    void handleReceitaXdespesa(ActionEvent event) {
-        main.exibeTelaGraficoReceitaXdespesa();
-        System.out.println("Abre tela gráfico receita x despesa");
-    }
-
-    public void preencheComboBoxMes() {
-        comboBoxMes.getItems().removeAll(comboBoxMes.getItems());
-        comboBoxMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+    public void atualizaValores() {
+        calculaSaldoPrevisto();
+        calculaSaldoAtual();
+        exibeUltimaMovimentacao();
     }
 
     public void setMain(Main main) {
@@ -236,4 +275,5 @@ public class TelaPrincipalController implements Initializable {
     public void setStage(Stage stageLogin) {
         this.palco = stageLogin;
     }
+    
 }

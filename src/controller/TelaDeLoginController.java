@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -29,7 +30,6 @@ public class TelaDeLoginController implements Initializable {
     @FXML
     private PasswordField lblSenha;
 
-    
     @FXML
     private Button btnOK;
 
@@ -38,8 +38,21 @@ public class TelaDeLoginController implements Initializable {
 
     @FXML
     void handleButtonOK(ActionEvent event) {
+        //testaLogin();
         main.exibeTelaPrincipal();
         System.out.println("A página principal deve ser carregada.");
+    }
+
+    public void testaLogin() {
+        if (lblLogin.getText().equals("admin") && lblSenha.getText().equals("admin")) {
+            main.exibeTelaPrincipal();
+        } else {
+            String titulo = "Falha na validação!";
+            String cabecalho = "Senha ou nome de usuário incorreto!";
+            String mensagem = "Por favor, tente novamente.";
+            main.mostraAlerta(Alert.AlertType.WARNING, titulo, cabecalho, mensagem);
+            main.exibeTelaDeLogin();
+        }
     }
 
     /**
